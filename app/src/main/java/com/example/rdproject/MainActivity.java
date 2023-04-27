@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("Ascultam ploaia!");
         System.out.println("dar nu ploaua");
         System.out.println("Nu ploua? Nu cred");
-
+        System.out.println("Nu bagati de seama culoarea la meniu trebuie facut un collor pallete pt aplicatie");
 
 
 

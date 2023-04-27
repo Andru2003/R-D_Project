@@ -4,27 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/material_dynamic_neutral20">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <nl.joery.animatedbottombar.AnimatedBottomBar
+        android:background="@color/design_default_color_surface"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        app:abb_selectedTabType="text"
+        app:abb_tabColor="@color/black"
+        app:abb_tabColorSelected="@color/material_dynamic_primary10"
+        app:abb_textSize="20sp"
+        app:abb_iconSize="38dp"
+        app:abb_textStyle="bold"
+        app:abb_rippleEnabled="true"
+        app:abb_rippleColor="#ADBDD7"
+        app:abb_tabAnimationSelected="slide"
+        app:abb_indicatorAppearance="round"
+        app:abb_indicatorColor="@color/material_dynamic_primary10"
+        app:abb_indicatorHeight="6dp"
+        app:abb_animationInterpolator="@android:anim/overshoot_interpolator"
+        app:abb_tabs="@menu/menu"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        >
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.334" />
+
+    </nl.joery.animatedbottombar.AnimatedBottomBar>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
