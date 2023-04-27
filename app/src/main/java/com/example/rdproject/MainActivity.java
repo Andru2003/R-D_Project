@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.println("Daca vedeti asta inseamna ca e bine");
         System.out.println("Sanatate si numai bine!");
+        System.out.println("Muie Steaua si nea Gigi!");
 
     }
 }
