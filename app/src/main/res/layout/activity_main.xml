@@ -8,27 +8,40 @@
     android:background="@color/material_dynamic_neutral20">
 
     <nl.joery.animatedbottombar.AnimatedBottomBar
-        android:background="@color/design_default_color_surface"
+        android:id="@+id/animatedBottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:abb_selectedTabType="text"
-        app:abb_tabColor="@color/black"
-        app:abb_tabColorSelected="@color/material_dynamic_primary10"
-        app:abb_textSize="20sp"
+        android:background="@color/design_default_color_surface"
+        app:abb_animationInterpolator="@android:anim/overshoot_interpolator"
         app:abb_iconSize="38dp"
-        app:abb_textStyle="bold"
-        app:abb_rippleEnabled="true"
-        app:abb_rippleColor="#ADBDD7"
-        app:abb_tabAnimationSelected="slide"
         app:abb_indicatorAppearance="round"
         app:abb_indicatorColor="@color/material_dynamic_primary10"
         app:abb_indicatorHeight="6dp"
-        app:abb_animationInterpolator="@android:anim/overshoot_interpolator"
+        app:abb_rippleColor="#ADBDD7"
+        app:abb_rippleEnabled="true"
+        app:abb_selectedTabType="text"
+        app:abb_tabAnimationSelected="slide"
+        app:abb_tabColor="@color/black"
+        app:abb_tabColorSelected="@color/material_dynamic_primary10"
         app:abb_tabs="@menu/menu"
+        app:abb_textSize="20sp"
+        app:abb_textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        >
-
+        tools:ignore="MissingClass">
 
     </nl.joery.animatedbottombar.AnimatedBottomBar>
+
+    <Button
+        android:id="@+id/main_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Start here"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/animatedBottomBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
