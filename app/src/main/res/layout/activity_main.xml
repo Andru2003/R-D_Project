@@ -7,6 +7,31 @@
     tools:context=".MainActivity"
     android:background="@color/material_dynamic_neutral20">
 
+    <Button
+        android:id="@+id/buttonlogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@color/black"
+        android:gravity="center"
+        android:paddingLeft="30dp"
+        android:paddingTop="20dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="20dp"
+        android:textAlignment="center"
+        android:textSize="10pt"
+        android:textStyle="bold"
+        app:cornerRadius="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/animatedBottomBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Go to Login"
+        tools:visibility="visible">
+
+    </Button>
+
+
     <nl.joery.animatedbottombar.AnimatedBottomBar
         android:id="@+id/animatedBottomBar"
         android:layout_width="match_parent"
@@ -26,22 +51,9 @@
         app:abb_tabs="@menu/menu"
         app:abb_textSize="20sp"
         app:abb_textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:ignore="MissingClass">
+        app:layout_constraintBottom_toBottomOf="parent">
+
 
     </nl.joery.animatedbottombar.AnimatedBottomBar>
-
-    <Button
-        android:id="@+id/main_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Start here"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/animatedBottomBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
