@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/home"
+        android:id="@+id/home1"
         android:title="Home"
         android:icon="@drawable/home_food"
         />
 
     <item
-        android:id="@+id/popular"
+        android:id="@+id/popular1"
         android:title="Popular"
         android:icon="@drawable/baseline_fastfood_24"
         />
 
     <item
-        android:id="@+id/account"
+        android:id="@+id/account1"
         android:title="MyAccount"
         android:icon="@drawable/icon_account"
         />

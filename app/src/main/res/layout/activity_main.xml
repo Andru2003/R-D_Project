@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,29 +7,32 @@
     tools:context=".MainActivity"
     android:background="@color/material_dynamic_neutral20">
 
-    <Button
-        android:id="@+id/buttonlogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@color/black"
-        android:gravity="center"
-        android:paddingLeft="30dp"
-        android:paddingTop="20dp"
-        android:paddingRight="30dp"
-        android:paddingBottom="20dp"
-        android:textAlignment="center"
-        android:textSize="10pt"
-        android:textStyle="bold"
-        app:cornerRadius="100dp"
-        app:layout_constraintBottom_toTopOf="@+id/animatedBottomBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Go to Login"
-        tools:visibility="visible">
+<!--    <Button-->
+<!--        android:id="@+id/buttonlogin"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="10dp"-->
+<!--        android:backgroundTint="#00FFFFFF"-->
+<!--        android:gravity="center"-->
+<!--        android:paddingLeft="30dp"-->
+<!--        android:paddingTop="20dp"-->
+<!--        android:paddingRight="30dp"-->
+<!--        android:paddingBottom="20dp"-->
+<!--        android:text="Go to Login"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textColor="#CF1313"-->
+<!--        android:textSize="10pt"-->
+<!--        android:textStyle="bold"-->
+<!--        app:cornerRadius="100dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/animatedBottomBar"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:strokeColor="#CF1313"-->
+<!--        app:strokeWidth="5dp"-->
+<!--        tools:text="Go to Login">-->
 
-    </Button>
+<!--    </Button>-->
 
 
     <nl.joery.animatedbottombar.AnimatedBottomBar
@@ -37,6 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/design_default_color_surface"
+        android:layout_alignParentBottom="true"
         app:abb_animationInterpolator="@android:anim/overshoot_interpolator"
         app:abb_iconSize="38dp"
         app:abb_indicatorAppearance="round"
@@ -51,9 +55,21 @@
         app:abb_tabs="@menu/menu"
         app:abb_textSize="20sp"
         app:abb_textStyle="bold"
+        app:abb_selectedIndex="0"
         app:layout_constraintBottom_toBottomOf="parent">
+
 
 
     </nl.joery.animatedbottombar.AnimatedBottomBar>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/animatedBottomBar"
+        />
+
+
+
+</RelativeLayout>
