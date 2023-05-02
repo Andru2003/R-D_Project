@@ -16,14 +16,15 @@
         android:layout_marginBottom="10dp"
         android:gravity="center"
         android:text="@string/login"
-        android:textStyle="bold"
         android:textSize="25sp"
+        android:textStyle="bold"
+
         app:layout_constraintBottom_toTopOf="@+id/login_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/login_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,18 +59,17 @@
         app:layout_constraintTop_toBottomOf="@+id/login_pswd" />
 
     <TextView
-        android:id="@+id/text_to_signin"
-        android:layout_width="match_parent"
+        android:id="@+id/textview2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="220dp"
+        android:layout_marginTop="12dp"
         android:gravity="center"
-        android:text="Don`t have an account yet? Sign in."
+        android:text="Don`t you have an account yet?"
         android:textSize="15dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LogIn_btn"
-        app:layout_constraintVertical_bias="0.071"
-        tools:layout_editor_absoluteX="16dp" />
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LogIn_btn" />
 
     <EditText
         android:id="@+id/login_pswd"
@@ -83,5 +83,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_email" />
+
+    <TextView
+        android:id="@+id/text_to_signin"
+        android:layout_width="76dp"
+        android:layout_height="23dp"
+        android:gravity="center"
+        android:text="Sign In"
+        android:textStyle="bold"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textview2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

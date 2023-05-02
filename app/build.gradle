@@ -54,6 +54,8 @@ dependencies {
 
 dependencies {
 
+
+    implementation 'com.google.firebase:firebase-database:20.1.0'
     implementation 'com.google.ar.sceneform:filament-android:1.17.1'
     constraints {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0") {

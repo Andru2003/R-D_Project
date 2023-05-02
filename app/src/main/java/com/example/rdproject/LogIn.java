@@ -3,6 +3,7 @@ package com.example.rdproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -24,6 +25,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.ktx.Firebase;
 
 public class LogIn extends AppCompatActivity {
@@ -33,6 +37,8 @@ public class LogIn extends AppCompatActivity {
     private EditText login_email, login_password;
     private TextView redirect_to_sign_up;
     private ProgressBar progressBar;
+    FirebaseDatabase database;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +52,21 @@ public class LogIn extends AppCompatActivity {
         redirect_to_sign_up = findViewById(R.id.text_to_signin);
         progressBar = findViewById(R.id.progress_bar);
 
+        final ProgressDialog text = new ProgressDialog(this);
+        text.setTitle("Loading");
+        text.setMessage("Please wait while it`s loading ...");
+
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String user_login_email = login_email.getText().toString();
                 String user_login_password = login_password.getText().toString();
+
+                auth = FirebaseAuth.getInstance();
+                database = FirebaseDatabase.getInstance();
+                reference = database.getReference("Users");
+                //Query order = reference.orderByChild("email").equalTo(user_login_email);
 
                 if(!user_login_email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(user_login_email).matches()){
                     if(!user_login_password.isEmpty()){
@@ -58,6 +74,7 @@ public class LogIn extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                     @Override
                                     public void onSuccess(AuthResult authResult) {
+                                        text.show();
                                         Toast.makeText(LogIn.this, "LogIn Successful.", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(LogIn.this, MainActivity.class));
                                         finish();
@@ -65,6 +82,7 @@ public class LogIn extends AppCompatActivity {
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
+                                        text.hide();
                                         Toast.makeText(LogIn.this, "LogIn failed.", Toast.LENGTH_SHORT).show();
                                     }
                                 });
