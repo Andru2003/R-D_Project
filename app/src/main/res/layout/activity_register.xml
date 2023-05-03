@@ -41,8 +41,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Password (must contain special charaters)"
+        android:inputType="textPassword"
+
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username" />
 
@@ -101,10 +103,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="text"
         android:hint="Confirm Password"
+        android:inputType="textPassword"
+
 
         app:layout_constraintTop_toBottomOf="@+id/signin_pswd"
-        tools:layout_editor_absoluteX="74dp" />
+        tools:layout_editor_absoluteX="15dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

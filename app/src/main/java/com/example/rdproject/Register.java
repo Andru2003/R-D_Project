@@ -21,8 +21,12 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.ktx.Firebase;
 
 import org.w3c.dom.Text;
@@ -82,36 +86,70 @@ public class Register extends AppCompatActivity {
                     confirm_password.setError("Passwords don`t match.");
                 }else {
                      Username_details sanatate = new Username_details(user_signin_email, editusername, user_signin_password);
-                     reference.child(editusername).setValue(sanatate);
-                    auth.createUserWithEmailAndPassword(user_signin_email, user_signin_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()) {
-                                text.show();
+                     Query checkemail = reference.orderByChild("email").equalTo(user_signin_email);
+                     Query checkusername = reference.orderByChild("username").equalTo(editusername);
 
-                                auth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if(task.isSuccessful())
-                                        {
-                                            Toast.makeText(Register.this, "User registered successfully. Please verify your e-mail.", Toast.LENGTH_SHORT).show();
-                                            signin_email.setText("");
-                                            signin_password.setText("");
-                                        }
-                                        else {
-                                            Toast.makeText(Register.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
+                     checkemail.addValueEventListener(new ValueEventListener() {
+                         @Override
+                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+                             if (snapshot.exists()) signin_email.setError("This email is already used.");
+                             else {
+                                 signin_email.setError(null);
+                                 checkusername.addValueEventListener(new ValueEventListener() {
+                                     @Override
+                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                         if (snapshot.exists()) {
+                                             username.setError("This username is already used.");
+                                         }
+                                         else{
+                                             username.setError(null);
+                                             auth.createUserWithEmailAndPassword(user_signin_email, user_signin_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                                 @Override
+                                                 public void onComplete(@NonNull Task<AuthResult> task) {
+                                                     if(task.isSuccessful()) {
+                                                         text.show();
 
-                                Toast.makeText(Register.this, "SignIn successful.", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(Register.this, LogIn.class));
-                            } else {
-                                text.hide();
-                                Toast.makeText(Register.this, "SignIn failed. Please try again!", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                                                         auth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                             @Override
+                                                             public void onComplete(@NonNull Task<Void> task) {
+                                                                 if(task.isSuccessful())
+                                                                 {
+                                                                     Toast.makeText(Register.this, "User registered successfully. Please verify your e-mail.", Toast.LENGTH_SHORT).show();
+                                                                     signin_email.setText("");
+                                                                     signin_password.setText("");
+                                                                     reference.child(editusername).setValue(sanatate);
+                                                                 }
+                                                                 else {
+                                                                     Toast.makeText(Register.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                                 }
+                                                             }
+                                                         });
+
+                                                         Toast.makeText(Register.this, "SignIn successful.", Toast.LENGTH_SHORT).show();
+                                                         startActivity(new Intent(Register.this, LogIn.class));
+                                                     } else {
+                                                         text.hide();
+                                                         Toast.makeText(Register.this, "SignIn failed. Please try again!", Toast.LENGTH_SHORT).show();
+                                                         System.out.println(task.getException().getMessage());
+                                                     }
+                                                 }
+                                             });
+                                         }
+                                     }
+
+                                     @Override
+                                     public void onCancelled(@NonNull DatabaseError error) {
+
+                                     }
+                                 });
+                             }
+                         }
+
+                         @Override
+                         public void onCancelled(@NonNull DatabaseError error) {
+
+                         }
+                     });
                 }
             }
         });

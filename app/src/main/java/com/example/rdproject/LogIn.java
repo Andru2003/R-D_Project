@@ -3,8 +3,10 @@ package com.example.rdproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -35,7 +37,7 @@ public class LogIn extends AppCompatActivity {
     private FirebaseAuth auth;
     private Button login_button;
     private EditText login_email, login_password;
-    private TextView redirect_to_sign_up;
+    private TextView redirect_to_sign_up, forgot_psw;
     private ProgressBar progressBar;
     FirebaseDatabase database;
     DatabaseReference reference;
@@ -51,6 +53,7 @@ public class LogIn extends AppCompatActivity {
         login_password = findViewById(R.id.login_pswd);
         redirect_to_sign_up = findViewById(R.id.text_to_signin);
         progressBar = findViewById(R.id.progress_bar);
+        forgot_psw = findViewById(R.id.forgot);
 
         final ProgressDialog text = new ProgressDialog(this);
         text.setTitle("Loading");
@@ -103,5 +106,53 @@ public class LogIn extends AppCompatActivity {
                 startActivity(new Intent(LogIn.this, Register.class));
             }
         });
-    }
+
+        forgot_psw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(LogIn.this);
+                View dialog_view = getLayoutInflater().inflate(R.layout.dialog_forgot, null);
+                EditText emailBox = dialog_view.findViewById(R.id.emailbox);
+
+                builder.setView(dialog_view);
+                AlertDialog dialog = builder.create();
+
+                dialog_view.findViewById(R.id.resend_email).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String userEmail = emailBox.getText().toString();
+
+                        if (TextUtils.isEmpty(userEmail) && !Patterns.EMAIL_ADDRESS.matcher(userEmail).matches())
+                        {
+                            Toast.makeText(LogIn.this, "Enter your registered e-mail", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        auth.sendPasswordResetEmail(userEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful())
+                                {
+                                    Toast.makeText(LogIn.this, "Verify your e-mail.", Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
+                                }
+                                else {
+                                    Toast.makeText(LogIn.this, "Unable to send an e-mail.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                });
+                dialog_view.findViewById(R.id.cancel_button).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                if (dialog.getWindow() != null) {
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+                }
+                dialog.show();
+            }
+    });
+}
 }
