@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -24,21 +25,29 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.ktx.Firebase;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class LogIn extends AppCompatActivity {
 
     private FirebaseAuth auth;
     private Button login_button;
-    private EditText login_email, login_password;
     private TextView redirect_to_sign_up, forgot_psw;
     private ProgressBar progressBar;
+    private TextInputEditText login_password, login_email;
     FirebaseDatabase database;
     DatabaseReference reference;
 
@@ -50,7 +59,7 @@ public class LogIn extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         login_button = findViewById(R.id.LogIn_btn);
         login_email = findViewById(R.id.login_email);
-        login_password = findViewById(R.id.login_pswd);
+        login_password = findViewById(R.id.login_password);
         redirect_to_sign_up = findViewById(R.id.text_to_signin);
         progressBar = findViewById(R.id.progress_bar);
         forgot_psw = findViewById(R.id.forgot);
@@ -59,16 +68,37 @@ public class LogIn extends AppCompatActivity {
         text.setTitle("Loading");
         text.setMessage("Please wait while it`s loading ...");
 
+        auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        reference = database.getReference("Users");
+
+        //test
+        final String pula;
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot data : snapshot.getChildren())
+                {
+                    String psw = data.child("password").getValue(String.class);
+                    Toast.makeText(LogIn.this, psw, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        // test
+
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String user_login_email = login_email.getText().toString();
-                String user_login_password = login_password.getText().toString();
+                String user_login_email = Objects.requireNonNull(login_email.getText()).toString();
+                String user_login_password = Objects.requireNonNull(login_password.getText()).toString();
 
-                auth = FirebaseAuth.getInstance();
-                database = FirebaseDatabase.getInstance();
-                reference = database.getReference("Users");
+
                 //Query order = reference.orderByChild("email").equalTo(user_login_email);
 
                 if(!user_login_email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(user_login_email).matches()){
@@ -154,5 +184,14 @@ public class LogIn extends AppCompatActivity {
                 dialog.show();
             }
     });
+
+//        eye_toggle.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(login_password.getInputType() == InputType.TYPE_TEXT_VARIATION_PASSWORD)
+//                    login_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+//                else login_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+//            }
+//        });
 }
 }

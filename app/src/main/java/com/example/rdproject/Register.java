@@ -31,11 +31,12 @@ import com.google.firebase.ktx.Firebase;
 
 import org.w3c.dom.Text;
 
+import java.util.Objects;
+
 public class Register extends AppCompatActivity {
 
     private FirebaseAuth auth;
-    private EditText signin_email, signin_password, confirm_password, username;
-    private TextView go_to_login;
+    private TextInputEditText signin_email, signin_password, confirm_password, username;
     private ProgressBar progressBar;
     FirebaseDatabase database;
     DatabaseReference reference;
@@ -52,7 +53,7 @@ public class Register extends AppCompatActivity {
         username = findViewById(R.id.username);
         confirm_password = findViewById(R.id.confirmPassword);
 
-        go_to_login = findViewById(R.id.text_to_login);
+        TextView go_to_login = findViewById(R.id.text_to_login);
 
         progressBar = findViewById(R.id.progress_bar);
 
@@ -63,10 +64,10 @@ public class Register extends AppCompatActivity {
         signin_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user_signin_email = signin_email.getText().toString();
-                String user_signin_password = signin_password.getText().toString();
-                String user_cofirm_password = confirm_password.getText().toString();
-                String editusername = username.getText().toString();
+                String user_signin_email = Objects.requireNonNull(signin_email.getText()).toString();
+                String user_signin_password = Objects.requireNonNull(signin_password.getText()).toString();
+                String user_cofirm_password = Objects.requireNonNull(confirm_password.getText()).toString();
+                String editusername = Objects.requireNonNull(username.getText()).toString();
 
                 auth = FirebaseAuth.getInstance();
                 database = FirebaseDatabase.getInstance();
@@ -109,7 +110,7 @@ public class Register extends AppCompatActivity {
                                                      if(task.isSuccessful()) {
                                                          text.show();
 
-                                                         auth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                         Objects.requireNonNull(auth.getCurrentUser()).sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                                              @Override
                                                              public void onComplete(@NonNull Task<Void> task) {
                                                                  if(task.isSuccessful())
@@ -120,7 +121,7 @@ public class Register extends AppCompatActivity {
                                                                      reference.child(editusername).setValue(sanatate);
                                                                  }
                                                                  else {
-                                                                     Toast.makeText(Register.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                                     Toast.makeText(Register.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                                                                  }
                                                              }
                                                          });
@@ -130,7 +131,7 @@ public class Register extends AppCompatActivity {
                                                      } else {
                                                          text.hide();
                                                          Toast.makeText(Register.this, "SignIn failed. Please try again!", Toast.LENGTH_SHORT).show();
-                                                         System.out.println(task.getException().getMessage());
+                                                         System.out.println(Objects.requireNonNull(task.getException()).getMessage());
                                                      }
                                                  }
                                              });
