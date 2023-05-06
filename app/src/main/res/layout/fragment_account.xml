@@ -38,7 +38,8 @@
                     android:background="@color/white"
                     android:padding="5dp"
                     android:src="@drawable/ic_add_image"
-                    android:layout_centerHorizontal="true" />
+                    android:layout_centerHorizontal="true"
+                    />
 
             </LinearLayout>
 

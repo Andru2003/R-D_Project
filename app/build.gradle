@@ -24,9 +24,7 @@ android {
         }
     }
 
-    configurations {
-        all*.exclude group: 'com.google.guava', module: 'listenablefuture'
-    }
+
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
