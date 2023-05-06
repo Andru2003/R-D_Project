@@ -47,10 +47,12 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if(newTab.getId() == R.id.popular1)
                 {
+                    System.out.println("Popular");
                     fragment = new PopularFragment();
                 }
                 else if(newTab.getId() == R.id.account1)
                 {
+                    System.out.println("Account");
                     fragment = new AccountFragment();
                 }
 

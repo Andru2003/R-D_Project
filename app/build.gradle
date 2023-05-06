@@ -23,12 +23,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    configurations {
+        all*.exclude group: 'com.google.guava', module: 'listenablefuture'
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     buildFeatures {
         viewBinding true
+    }
+    dataBinding {
+        enabled = true
     }
 }
 
@@ -45,12 +53,26 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
+    //Our implementations://
+
     //menu library//
     implementation 'nl.joery.animatedbottombar:library:1.1.0'
+
+    //Retrofit - tool used for turning HTTP API into a Java interface.//
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    //Picasso - tool used to load images from our databases.//
+    implementation 'com.squareup.picasso:picasso:2.8'
+
 }
 
 dependencies {
 
+    implementation 'androidx.navigation:navigation-runtime:2.5.2'
+    implementation 'androidx.navigation:navigation-runtime-ktx:2.5.2'
+
+    implementation 'com.google.firebase:firebase-database:20.1.0'
     implementation 'com.google.firebase:firebase-database-ktx:20.2.1'
     constraints {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0") {
