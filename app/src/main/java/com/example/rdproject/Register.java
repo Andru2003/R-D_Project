@@ -86,7 +86,7 @@ public class Register extends AppCompatActivity {
                 } else if(!user_cofirm_password.matches(user_signin_password)) {
                     confirm_password.setError("Passwords don`t match.");
                 }else {
-                     Username_details sanatate = new Username_details(user_signin_email, editusername, user_signin_password);
+                     Username_details sanatate = new Username_details(user_signin_email, editusername, user_signin_password, "", "");
                      Query checkemail = reference.orderByChild("email").equalTo(user_signin_email);
                      Query checkusername = reference.orderByChild("username").equalTo(editusername);
 
