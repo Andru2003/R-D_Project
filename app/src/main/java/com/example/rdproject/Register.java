@@ -82,11 +82,11 @@ public class Register extends AppCompatActivity {
                     username.setError("Username cannot be empty!");
                 }
                 else if(user_signin_password.isEmpty()) {
-                    signin_password.setError("Password cannot be empty!");
+                    Toast.makeText(Register.this, "Password cannot be empty", Toast.LENGTH_SHORT).show();
                 } else if (user_signin_password.length() < 6) {
-                    signin_password.setError("Password cannot be less than 6 characters!");
+                    Toast.makeText(Register.this, "Password cannot be less than 6 characters!", Toast.LENGTH_SHORT).show();
                 } else if(!user_cofirm_password.matches(user_signin_password)) {
-                    confirm_password.setError("Passwords don`t match.");
+                    Toast.makeText(Register.this, "Passwords don`t match.", Toast.LENGTH_SHORT).show();
                 }else {
 
                     HashMap<String, Object> hashMap = new HashMap<>();

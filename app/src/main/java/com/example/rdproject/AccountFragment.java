@@ -5,6 +5,7 @@ import static android.app.Activity.RESULT_OK;
 import android.Manifest;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -21,16 +22,21 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -178,7 +184,7 @@ public class AccountFragment extends Fragment {
     }
 
     private void showEditProfileDialog() {
-        String[] options = {"Select photo from gallery", "Select photo from camera", "Edit description", "Change username", "Change password"};
+        String[] options = {"Select photo from gallery", "Select photo from camera", "Edit description", "Change username", "Change password", "Log Out"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Choose Action");
         builder.setItems(options, new DialogInterface.OnClickListener() {
@@ -193,101 +199,202 @@ public class AccountFragment extends Fragment {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(intent, CAMERA_REQUEST_CODE);
                 } else if (which == 2) {
-                    pd.setMessage("Updating description");
+                    final EditText input = new EditText(getActivity());
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+                    final String currentDescription = "";
+                    input.setText(currentDescription);
+                    input.setSelection(currentDescription.length());
+                    final DatabaseReference descriptionRef = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid()).child("description");
+                    descriptionRef.setValue(input.getText().toString())
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    DatabaseReference ref = descriptionRef.getRef();
+                                    // Do something with the DatabaseReference object
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // Handle the error
+                                }
+                            });
+
+
+                    AlertDialog.Builder descriptionDialog = new AlertDialog.Builder(getActivity());
+                    descriptionDialog.setTitle("Edit Description");
+                    descriptionDialog.setView(input);
+                    descriptionDialog.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String newDescription = input.getText().toString().trim();
+                            descriptionRef.setValue(newDescription);
+                            // Update the profile description on the page here.
+                        }
+                    });
+                    descriptionDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    final AlertDialog descriptionAlert = descriptionDialog.create();
+
+                    input.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            descriptionAlert.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(!s.toString().trim().isEmpty());
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                        }
+                    });
+
+                    descriptionAlert.show();
                 } else if (which == 3) {
                     pd.setMessage("Changing username");
-                } else {
+                    final EditText input = new EditText(getActivity());
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+                    final String currentUsername = "";
+                    input.setText(currentUsername);
+                    input.setSelection(currentUsername.length());
+                    final DatabaseReference usernameRef = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid()).child("username");
+                    usernameRef.setValue(input.getText().toString())
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    DatabaseReference ref = usernameRef.getRef();
+                                    // Do something with the DatabaseReference object
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // Handle the error
+                                }
+                            });
+
+
+                    AlertDialog.Builder usernameDialog = new AlertDialog.Builder(getActivity());
+                    usernameDialog.setTitle("Edit Username");
+                    usernameDialog.setView(input);
+                    usernameDialog.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String newUsername = input.getText().toString().trim();
+                            usernameRef.setValue(newUsername);
+                            // Update the profile username on the page here.
+                        }
+                    });
+                    usernameDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    final AlertDialog usernameAlert = usernameDialog.create();
+
+                    input.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            usernameAlert.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(!s.toString().trim().isEmpty());
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                        }
+                    });
+
+                    usernameAlert.show();
+
+                } else if (which == 4){
                     pd.setMessage("Changing password");
+                    final EditText input = new EditText(getActivity());
+                    input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+                    // Get the current password of the user and set it as the initial text of the EditText
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    String currentPassword = ""; // Replace this with the user's current password
+                    input.setText(currentPassword);
+                    input.setSelection(currentPassword.length());
+
+                    AlertDialog.Builder passwordDialog = new AlertDialog.Builder(getActivity());
+                    passwordDialog.setTitle("Edit Password");
+                    passwordDialog.setView(input);
+                    passwordDialog.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String newPassword = input.getText().toString().trim();
+
+                            // Make sure the user is authenticated before updating their password
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            if (user != null) {
+                                user.updatePassword(newPassword)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Toast.makeText(getActivity(), "Password has been successfully updated", Toast.LENGTH_SHORT).show();
+                                                    final DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid());
+                                                    userRef.child("password").setValue(newPassword).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            // The password has been updated in the database
+                                                        }
+                                                    });
+
+                                                } else {
+                                                    Toast.makeText(getActivity(), "Failed to update password", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                            }
+                        }
+                    });
+                    passwordDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    final AlertDialog passwordAlert = passwordDialog.create();
+
+                    input.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            passwordAlert.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(!s.toString().trim().isEmpty());
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                        }
+                    });
+
+                    passwordAlert.show();
+
+                }else {
+                    pd.setTitle("Logging out");
+                    startActivity(new Intent(getActivity(), LogIn.class));
                 }
             }
         });
         builder.create().show();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == STORAGE_REQUEST_CODE) {
-                Uri imageUri = data.getData();
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);
-                    Glide.with(this).load(bitmap).apply(RequestOptions.circleCropTransform()).into(user_profile_photo);
-                    // Get a reference to the user's node in the database
-                    // Get a reference to the user's node in the database
-                    DatabaseReference userRef = reference.child(user.getUid());
-
-                    // Upload the photo to Firebase Storage and get a reference to the uploaded file
-                    StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-                    StorageReference photoRef = storageRef.child("profile_photos/" + user.getUid() + ".jpg");
-                    UploadTask uploadTask = photoRef.putFile(imageUri);
-
-                    // Set up a listener to get the download URL of the uploaded image after the upload is complete
-                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            // Get the download URL of the uploaded image from the task snapshot
-                            photoRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    // Update the "image" field of the user's node in the database with the download URL
-                                    userRef.child("image").setValue(uri.toString());
-                                }
-                            });
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            // Handle any errors
-                            Toast.makeText(getActivity(), "Failed to upload profile photo", Toast.LENGTH_SHORT).show();
-                        }
-                    });
 
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else if (requestCode == CAMERA_REQUEST_CODE) {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                user_profile_photo.setImageBitmap(photo);
-
-                // Get a reference to the Storage node where the photo will be uploaded
-                StorageReference storageRef = storage.getReference().child("profile_photos/" + user.getUid() + ".jpg");
-
-                // Upload the photo to Firebase Storage
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                byte[] dataBytes = baos.toByteArray();
-                UploadTask uploadTask = storageRef.putBytes(dataBytes);
-
-                // Add a listener to track the upload progress
-                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // Get a reference to the user's node in the database
-                        DatabaseReference userRef = reference.child(user.getUid());
-
-                        // Get the download URL of the uploaded image from the Storage reference
-                        storageRef.getDownloadUrl()
-                                .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        // Update the "image" field of the user's node in the database with the download URL
-                                        userRef.child("image").setValue(uri.toString());
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        // Handle any errors
-                                        Toast.makeText(getActivity(), "Failed to upload profile photo", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                    }
-                });
-            }
-
-        }
-    }
 
 }

@@ -72,25 +72,6 @@ public class LogIn extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("Users");
 
-        //test
-        final String pula;
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot data : snapshot.getChildren())
-                {
-                    String psw = data.child("password").getValue(String.class);
-                    Toast.makeText(LogIn.this, psw, Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        // test
-
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,7 +101,7 @@ public class LogIn extends AppCompatActivity {
                                     }
                                 });
                     } else {
-                        login_password.setError("Password cannot be empty!");
+                        Toast.makeText(LogIn.this, "Password cannot be empty!", Toast.LENGTH_SHORT).show();
                     }
                 }else if(user_login_email.isEmpty()){
                     login_email.setError("E-mail cannot be empty!");
@@ -185,13 +166,5 @@ public class LogIn extends AppCompatActivity {
             }
     });
 
-//        eye_toggle.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(login_password.getInputType() == InputType.TYPE_TEXT_VARIATION_PASSWORD)
-//                    login_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-//                else login_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-//            }
-//        });
 }
 }
