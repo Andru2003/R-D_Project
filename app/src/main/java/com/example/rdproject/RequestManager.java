@@ -5,6 +5,8 @@ import android.content.Context;
 import com.example.rdproject.Listeners.RandomRecipiResponseListener;
 import com.example.rdproject.Models.RandomRApiResponse;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -18,7 +20,6 @@ public class RequestManager {
 
     //singleton class to
     Context context; //the context of our request
-
     //initialisation of the Retrofit tool
     //it takes the base url of the online api, does a convert
     //on the Json and buids it.
@@ -33,10 +34,10 @@ public class RequestManager {
 
 
     // gets all the necesary data from the api
-    public void getRandomRecipes(RandomRecipiResponseListener l)
+    public void getRandomRecipes(RandomRecipiResponseListener l, List<String> tags)
     {
         CallRandomRecipes callRandomRecipes = retrofit.create(CallRandomRecipes.class);
-        Call<RandomRApiResponse> call = callRandomRecipes.callRandomRecipe(context.getString(R.string.api_key),"10");
+        Call<RandomRApiResponse> call = callRandomRecipes.callRandomRecipe(context.getString(R.string.api_key),"5", tags);
         call.enqueue(new Callback<RandomRApiResponse>() {
             @Override
             public void onResponse(Call<RandomRApiResponse> call, Response<RandomRApiResponse> response) {
@@ -65,7 +66,10 @@ public class RequestManager {
                //link to documentation: "https://spoonacular.com/food-api/docs#Get-Random-Recipes"
 
                  @Query("apiKey") String apiKey,
-                 @Query("number") String number
+                 @Query("number") String number,
+
+                 // Radu has been here, we will add a new query
+                 @Query("tags") List<String> tags
         );
     }
 }
