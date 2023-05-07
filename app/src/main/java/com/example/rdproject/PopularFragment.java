@@ -14,11 +14,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.rdproject.Adapter.RandomRecipeAdapter;
 import com.example.rdproject.Listeners.RandomRecipiResponseListener;
 import com.example.rdproject.Models.RandomRApiResponse;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class PopularFragment extends Fragment {
@@ -27,7 +33,10 @@ public class PopularFragment extends Fragment {
     RequestManager manager;
     RandomRecipeAdapter randomRecipeAdapter;
     RecyclerView recyclerView;
-
+    // Here we create a spinner
+    Spinner spinner;
+    // We will create the list of tags
+    List<String> tags = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,8 +51,21 @@ public class PopularFragment extends Fragment {
 
       //  dialog = new ProgressDialog(view.getContext());
     //    dialog.setTitle("Loading");
+        // Here we will use the spinner to match the xmls with the string(dish types)
+        spinner = view.findViewById(R.id.spinner1_tags);
+        // here we create the Array Adapter
+        ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(
+                getContext(),
+                R.array.tags,
+                R.layout.spinner_text
+        );
+        arrayAdapter.setDropDownViewResource(R.layout.spinner_inner_text);
+        spinner.setAdapter(arrayAdapter);
+        spinner.setOnItemSelectedListener(spinnerSelectedListener);
+
         manager = new RequestManager(view.getContext());
-        manager.getRandomRecipes(randomRecipeResponseListener);
+        //manager.getRandomRecipes(randomRecipeResponseListener);
+
         //dialog.show();
 
     }
@@ -62,6 +84,21 @@ public class PopularFragment extends Fragment {
         @Override
         public void didError(String message) {
             Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    // Here we will add the listeners for every button in the dropdown
+    private  final AdapterView.OnItemSelectedListener spinnerSelectedListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            tags.clear();
+            tags.add(parent.getSelectedItem ().toString());
+            manager.getRandomRecipes(randomRecipeResponseListener, tags);
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
         }
     };
 

@@ -13,24 +13,45 @@
        android:layout_height="match_parent"
        android:background="#09EA3A"
        android:orientation="vertical">
-       <TextView
+       <androidx.appcompat.widget.Toolbar
            android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:text="Popular dishes around the world!"
-           android:layout_margin="15dp"
-           android:padding="10dp"
-           android:textSize="10pt"
-           android:textAlignment="center"
-           android:textColor="@color/white"
-           android:textStyle="bold"
+           android:layout_height="?attr/actionBarSize">
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
 
-           >
-       </TextView>
+               <TextView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="15dp"
+                   android:layout_marginTop="15dp"
+                   android:layout_marginEnd="15dp"
+                   android:layout_marginBottom="15dp"
+                   android:padding="0dp"
+
+                   android:text="Popular dishes!"
+                   android:textColor="@color/white"
+
+                   android:textSize="10pt"
+                   android:textStyle="bold" />
+           <Spinner
+               android:id="@+id/spinner1_tags"
+               android:gravity="center"
+               android:layout_alignParentEnd="true"
+               android:entries="@array/tags"
+               android:layout_width="wrap_content"
+               android:layout_height="match_parent" />
+
+
+
+
+       </RelativeLayout>
+       </androidx.appcompat.widget.Toolbar>
        <androidx.recyclerview.widget.RecyclerView
           android:id="@+id/recyclerRandom"
            android:layout_marginTop="5dp"
-           android:layout_marginLeft="20dp"
-           android:layout_marginRight="20dp"
+           android:layout_marginLeft="8dp"
+           android:layout_marginRight="8dp"
            android:layout_width="match_parent"
            android:layout_height="match_parent"
            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
