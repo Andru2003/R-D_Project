@@ -205,20 +205,22 @@ public class AccountFragment extends Fragment {
                     input.setText(currentDescription);
                     input.setSelection(currentDescription.length());
                     final DatabaseReference descriptionRef = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid()).child("description");
-                    descriptionRef.setValue(input.getText().toString())
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    DatabaseReference ref = descriptionRef.getRef();
-                                    // Do something with the DatabaseReference object
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    // Handle the error
-                                }
-                            });
+                    if(!input.getText().toString().equals("")) {
+                        descriptionRef.setValue(input.getText().toString())
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        DatabaseReference ref = descriptionRef.getRef();
+                                        // Do something with the DatabaseReference object
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        // Handle the error
+                                    }
+                                });
+                    }
 
 
                     AlertDialog.Builder descriptionDialog = new AlertDialog.Builder(getActivity());
@@ -264,21 +266,22 @@ public class AccountFragment extends Fragment {
                     input.setText(currentUsername);
                     input.setSelection(currentUsername.length());
                     final DatabaseReference usernameRef = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid()).child("username");
-                    usernameRef.setValue(input.getText().toString())
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    DatabaseReference ref = usernameRef.getRef();
-                                    // Do something with the DatabaseReference object
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    // Handle the error
-                                }
-                            });
-
+                    if(!input.getText().toString().equals("")) {
+                        usernameRef.setValue(input.getText().toString())
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        DatabaseReference ref = usernameRef.getRef();
+                                        // Do something with the DatabaseReference object
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        // Handle the error
+                                    }
+                                });
+                    }
 
                     AlertDialog.Builder usernameDialog = new AlertDialog.Builder(getActivity());
                     usernameDialog.setTitle("Edit Username");
