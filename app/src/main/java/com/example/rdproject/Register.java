@@ -31,6 +31,7 @@ import com.google.firebase.ktx.Firebase;
 
 import org.w3c.dom.Text;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public class Register extends AppCompatActivity {
@@ -40,6 +41,7 @@ public class Register extends AppCompatActivity {
     private ProgressBar progressBar;
     FirebaseDatabase database;
     DatabaseReference reference;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,9 +88,16 @@ public class Register extends AppCompatActivity {
                 } else if(!user_cofirm_password.matches(user_signin_password)) {
                     confirm_password.setError("Passwords don`t match.");
                 }else {
-                     Username_details sanatate = new Username_details(user_signin_email, editusername, user_signin_password, "", "");
-                     Query checkemail = reference.orderByChild("email").equalTo(user_signin_email);
-                     Query checkusername = reference.orderByChild("username").equalTo(editusername);
+
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put("email", user_signin_email);
+                    hashMap.put("username", editusername);
+                    hashMap.put("password", user_signin_password);
+                    hashMap.put("description", "");
+                    hashMap.put("image", "");
+
+                    Query checkemail = reference.orderByChild("email").equalTo(user_signin_email);
+                    Query checkusername = reference.orderByChild("username").equalTo(editusername);
 
                      checkemail.addValueEventListener(new ValueEventListener() {
                          @Override
@@ -118,7 +127,8 @@ public class Register extends AppCompatActivity {
                                                                      Toast.makeText(Register.this, "User registered successfully. Please verify your e-mail.", Toast.LENGTH_SHORT).show();
                                                                      signin_email.setText("");
                                                                      signin_password.setText("");
-                                                                     reference.child(editusername).setValue(sanatate);
+                                                                     user = auth.getCurrentUser();
+                                                                     reference.child(user.getUid()).setValue(hashMap);
                                                                  }
                                                                  else {
                                                                      Toast.makeText(Register.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
