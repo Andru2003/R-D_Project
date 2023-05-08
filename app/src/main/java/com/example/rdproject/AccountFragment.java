@@ -397,7 +397,88 @@ public class AccountFragment extends Fragment {
         builder.create().show();
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == STORAGE_REQUEST_CODE) {
+                Uri imageUri = data.getData();
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);
+                    Glide.with(this).load(bitmap).apply(RequestOptions.circleCropTransform()).into(user_profile_photo);
 
+                    // Get a reference to the user's node in the database
+                    DatabaseReference userRef = reference.child(user.getUid());
 
+// Upload the photo to Firebase Storage and get a reference to the uploaded file
+                    StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+                    StorageReference photoRef = storageRef.child("profile_photos/" + user.getUid() + ".jpg");
+                    UploadTask uploadTask = photoRef.putFile(imageUri);
 
-}
+// Set up a listener to get the download URL of the uploaded image after the upload is complete
+                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // Get the download URL of the uploaded image from the task snapshot
+                            photoRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    // Update the "image" field of the user's node in the database with the download URL
+                                    userRef.child("image").setValue(uri.toString());
+                                }
+                            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // Handle any errors
+                            Toast.makeText(getActivity(), "Failed to upload profile photo", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if (requestCode == CAMERA_REQUEST_CODE) {
+                    Bitmap photo = (Bitmap) data.getExtras().get("data");
+                    user_profile_photo.setImageBitmap(photo);
+
+                    // Get a reference to the Storage node where the photo will be uploaded
+                    StorageReference storageRef = storage.getReference().child("profile_photos/" + user.getUid() + ".jpg");
+
+                    // Upload the photo to Firebase Storage
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    photo.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    byte[] dataBytes = baos.toByteArray();
+                    UploadTask uploadTask = storageRef.putBytes(dataBytes);
+
+                    // Add a listener to track the upload progress
+                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // Get a reference to the user's node in the database
+                            DatabaseReference userRef = reference.child(user.getUid());
+
+                            // Get the download URL of the uploaded image from the Storage reference
+                            storageRef.getDownloadUrl()
+                                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            // Update the "image" field of the user's node in the database with the download URL
+                                            userRef.child("image").setValue(uri.toString());
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            // Handle any errors
+                                            Toast.makeText(getActivity(), "Failed to upload profile photo", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }
+                    });
+                }
+
+            }
+        }
+    }
+
