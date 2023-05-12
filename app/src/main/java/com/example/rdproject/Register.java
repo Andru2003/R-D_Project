@@ -38,30 +38,22 @@ public class Register extends AppCompatActivity {
 
     private FirebaseAuth auth;
     private TextInputEditText signin_email, signin_password, confirm_password, username;
-    private ProgressBar progressBar;
-    FirebaseDatabase database;
-    DatabaseReference reference;
-    FirebaseUser user;
+    private TextView go_to_login;
+    private Button signin_button;
+    private FirebaseDatabase database;
+    private DatabaseReference reference;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        Button signin_button = findViewById(R.id.signin_buttton);
+        initialize_views();
 
-        signin_email = findViewById(R.id.signin_email);
-        signin_password = findViewById(R.id.signin_pswd);
-        username = findViewById(R.id.username);
-        confirm_password = findViewById(R.id.confirmPassword);
-
-        TextView go_to_login = findViewById(R.id.text_to_login);
-
-        progressBar = findViewById(R.id.progress_bar);
-
-        final ProgressDialog text = new ProgressDialog(this);
-        text.setTitle("Loading");
-        text.setMessage("Please wait while it`s loading ...");
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Loading");
+        progressDialog.setMessage("Please wait while it`s loading ...");
 
         signin_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,20 +67,20 @@ public class Register extends AppCompatActivity {
                 database = FirebaseDatabase.getInstance();
                 reference = database.getReference("Users");
 
-                if(user_signin_email.isEmpty()) {
+                //validate user input and display an error if necessary
+                if (user_signin_email.isEmpty()) {
                     signin_email.setError("E-mail cannot be empty!");
-                }
-                else if(editusername.isEmpty()) {
+                } else if (editusername.isEmpty()) {
                     username.setError("Username cannot be empty!");
-                }
-                else if(user_signin_password.isEmpty()) {
+                } else if (user_signin_password.isEmpty()) {
                     Toast.makeText(Register.this, "Password cannot be empty", Toast.LENGTH_SHORT).show();
                 } else if (user_signin_password.length() < 6) {
                     Toast.makeText(Register.this, "Password cannot be less than 6 characters!", Toast.LENGTH_SHORT).show();
-                } else if(!user_cofirm_password.matches(user_signin_password)) {
+                } else if (!user_cofirm_password.matches(user_signin_password)) {
                     Toast.makeText(Register.this, "Passwords don`t match.", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
 
+                    //we create the first child of the node "Users" in our Firebase RealTime Database
                     HashMap<String, Object> hashMap = new HashMap<>();
                     hashMap.put("email", user_signin_email);
                     hashMap.put("username", editusername);
@@ -96,71 +88,76 @@ public class Register extends AppCompatActivity {
                     hashMap.put("description", "");
                     hashMap.put("image", "");
 
+                    //queries for checking whether user`s chosen email and username already exists in the database
                     Query checkemail = reference.orderByChild("email").equalTo(user_signin_email);
                     Query checkusername = reference.orderByChild("username").equalTo(editusername);
 
-                     checkemail.addValueEventListener(new ValueEventListener() {
-                         @Override
-                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                             if (snapshot.exists()) signin_email.setError("This email is already used.");
-                             else {
-                                 signin_email.setError(null);
-                                 checkusername.addValueEventListener(new ValueEventListener() {
-                                     @Override
-                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                         if (snapshot.exists()) {
-                                             username.setError("This username is already used.");
-                                         }
-                                         else{
-                                             username.setError(null);
-                                             auth.createUserWithEmailAndPassword(user_signin_email, user_signin_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                                 @Override
-                                                 public void onComplete(@NonNull Task<AuthResult> task) {
-                                                     if(task.isSuccessful()) {
-                                                         text.show();
+                    checkemail.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists())
+                                signin_email.setError("This email is already used.");
+                            else {
+                                signin_email.setError(null);
+                                checkusername.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if (snapshot.exists()) {
+                                            username.setError("This username is already used.");
+                                        } else {
+                                            username.setError(null);
+                                            // create user with email and password in Firebase authentication system
+                                            auth.createUserWithEmailAndPassword(user_signin_email, user_signin_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                                    if (task.isSuccessful()) {
+                                                        progressDialog.show();
 
-                                                         Objects.requireNonNull(auth.getCurrentUser()).sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                             @Override
-                                                             public void onComplete(@NonNull Task<Void> task) {
-                                                                 if(task.isSuccessful())
-                                                                 {
-                                                                     Toast.makeText(Register.this, "User registered successfully. Please verify your e-mail.", Toast.LENGTH_SHORT).show();
-                                                                     signin_email.setText("");
-                                                                     signin_password.setText("");
-                                                                     user = auth.getCurrentUser();
-                                                                     reference.child(user.getUid()).setValue(hashMap);
-                                                                 }
-                                                                 else {
-                                                                     Toast.makeText(Register.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
-                                                                 }
-                                                             }
-                                                         });
+                                                        //send an verification email if the register succeeded
+                                                        Objects.requireNonNull(auth.getCurrentUser()).sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                if (task.isSuccessful()) {
+                                                                    Toast.makeText(Register.this, "User registered successfully. Please verify your e-mail.", Toast.LENGTH_SHORT).show();
+                                                                    // set the TextInputEditText fields to empty
+                                                                    signin_email.setText("");
+                                                                    signin_password.setText("");
+                                                                    user = auth.getCurrentUser();
+                                                                    reference.child(user.getUid()).setValue(hashMap);
+                                                                } else {
 
-                                                         Toast.makeText(Register.this, "SignIn successful.", Toast.LENGTH_SHORT).show();
-                                                         startActivity(new Intent(Register.this, LogIn.class));
-                                                     } else {
-                                                         text.hide();
-                                                         Toast.makeText(Register.this, "SignIn failed. Please try again!", Toast.LENGTH_SHORT).show();
-                                                         System.out.println(Objects.requireNonNull(task.getException()).getMessage());
-                                                     }
-                                                 }
-                                             });
-                                         }
-                                     }
+                                                                    //display error message if register failed
+                                                                    Toast.makeText(Register.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                                                                }
+                                                            }
+                                                        });
 
-                                     @Override
-                                     public void onCancelled(@NonNull DatabaseError error) {
+                                                        Toast.makeText(Register.this, "SignIn successful.", Toast.LENGTH_SHORT).show();
+                                                        startActivity(new Intent(Register.this, LogIn.class));
+                                                    } else {
+                                                        // display informative message
+                                                        progressDialog.hide();
+                                                        Toast.makeText(Register.this, "SignIn failed. Please try again!", Toast.LENGTH_SHORT).show();
+                                                        System.out.println(Objects.requireNonNull(task.getException()).getMessage());
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    }
 
-                                     }
-                                 });
-                             }
-                         }
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
 
-                         @Override
-                         public void onCancelled(@NonNull DatabaseError error) {
+                                    }
+                                });
+                            }
+                        }
 
-                         }
-                     });
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
             }
         });
@@ -171,5 +168,16 @@ public class Register extends AppCompatActivity {
                 startActivity(new Intent(Register.this, LogIn.class));
             }
         });
-   }
     }
+
+    private void initialize_views() {
+        signin_button = findViewById(R.id.signin_buttton);
+        signin_email = findViewById(R.id.signin_email);
+        signin_password = findViewById(R.id.signin_pswd);
+        username = findViewById(R.id.username);
+        confirm_password = findViewById(R.id.confirmPassword);
+        go_to_login = findViewById(R.id.text_to_login);
+
+    }
+
+}

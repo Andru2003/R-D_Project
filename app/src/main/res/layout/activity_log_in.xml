@@ -10,7 +10,7 @@
     android:padding="15dp">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/LogIn_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -24,44 +24,39 @@
         app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent" />
 
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/text_input_login_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="14dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="E-mail"
+            android:hint="@string/prompt_email"
+            android:inputType="textEmailAddress"
+
             tools:layout_editor_absoluteX="15dp"
             tools:layout_editor_absoluteY="134dp"
-            android:inputType="textEmailAddress"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
-
-    <ProgressBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/progress_bar"
-        android:visibility="gone"
-        android:scrollbarSize="10dp"
-        />
 
     <Button
         android:id="@+id/LogIn_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/login_button"
+        android:text="@string/login"
         android:textSize="20sp"
+
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.542"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/forgot" />
 
@@ -71,8 +66,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:gravity="center"
-        android:text="Don`t you have an account yet?"
-        android:textSize="15dp"
+        android:text="@string/check_account_not_exists"
+        android:textSize="15sp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -83,18 +78,22 @@
         android:id="@+id/eye_toggle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         app:layout_constraintTop_toBottomOf="@+id/text_input_login_email"
         app:passwordToggleEnabled="true"
+
         tools:layout_editor_absoluteX="14dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:hint="@string/prompt_password"
+            android:inputType="textEmailAddress"
+
             tools:layout_editor_absoluteX="15dp"
             tools:layout_editor_absoluteY="134dp"
-            android:inputType="textEmailAddress"/>
+            />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -103,7 +102,7 @@
         android:layout_width="76dp"
         android:layout_height="23dp"
         android:gravity="center"
-        android:text="Sign In"
+        android:text="@string/action_sign_in_short"
         android:textStyle="bold"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -112,12 +111,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textview2" />
 
     <TextView
-        android:id="@+id/forgot"
+        android:id="@+id/forgot_pswd_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="I forgot my password."
+        android:text="@string/forgotpsd"
         android:textStyle="bold"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.83"
         app:layout_constraintStart_toStartOf="parent"
