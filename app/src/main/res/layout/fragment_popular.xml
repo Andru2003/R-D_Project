@@ -47,6 +47,26 @@
 
        </RelativeLayout>
        </androidx.appcompat.widget.Toolbar>
+
+       <androidx.cardview.widget.CardView
+           android:layout_width="match_parent"
+           android:layout_height="50dp"
+           app:cardElevation="8dp"
+           app:cardBackgroundColor="#09EA3A"
+           android:layout_margin="8dp"
+           app:cardCornerRadius="80dp">
+
+           <androidx.appcompat.widget.SearchView
+               android:id="@+id/searchBarView"
+               app:queryHint="Search your favorite recipies by name!"
+               app:iconifiedByDefault="false"
+               android:background="#ffffff"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+
+               />
+
+       </androidx.cardview.widget.CardView>>
        <androidx.recyclerview.widget.RecyclerView
           android:id="@+id/recyclerRandom"
            android:layout_marginTop="5dp"

@@ -1,7 +1,6 @@
 {
   "project_info": {
     "project_number": "1094647440002",
-    "firebase_url": "https://r-d-log-in-default-rtdb.firebaseio.com",
     "project_id": "r-d-log-in",
     "storage_bucket": "r-d-log-in.appspot.com"
   },
@@ -14,14 +13,6 @@
         }
       },
       "oauth_client": [
-        {
-          "client_id": "1094647440002-a211u2tg808jrrdo5jknmrrjbjtj80le.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.rdproject",
-            "certificate_hash": "ee09e6b127a726a0aa32c06fc23b848c49cc874f"
-          }
-        },
         {
           "client_id": "1094647440002-3mtd1mgcsdderpibup3eu5l7bsgri10l.apps.googleusercontent.com",
           "client_type": 3
