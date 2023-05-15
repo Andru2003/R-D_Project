@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -21,6 +22,7 @@ import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -29,6 +31,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -233,39 +236,43 @@ public class AccountFragment extends Fragment {
                         pickFromCamera();
                     //}
                 } else if (which == 2) {
-                    final EditText input = new EditText(getActivity());
-                    input.setInputType(InputType.TYPE_CLASS_TEXT);
-                    final String currentDescription = "";
-                    input.setText(currentDescription);
-                    input.setSelection(currentDescription.length());
-                    final DatabaseReference descriptionRef = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid()).child("description");
-                    if (!input.getText().toString().equals("")) {
-                        descriptionRef.setValue(input.getText().toString())
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        DatabaseReference ref = descriptionRef.getRef();
-                                        // Do something with the DatabaseReference object
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        // Handle the error
-                                    }
-                                });
-                    }
+                    LayoutInflater inflater = LayoutInflater.from(getActivity());
+                    View dialogView = inflater.inflate(R.layout.description_dialog, null);
 
+                    final EditText input = dialogView.findViewById(R.id.descriptionEditText);
+                    final TextView characterCount = dialogView.findViewById(R.id.characterCountTextView);
+
+                    final DatabaseReference descriptionRef = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid()).child("description");
+
+                    final int MAX_DESCRIPTION_LENGTH = 100;
 
                     AlertDialog.Builder descriptionDialog = new AlertDialog.Builder(getActivity());
-                    descriptionDialog.setTitle("Edit Description");
-                    descriptionDialog.setView(input);
+                    descriptionDialog.setView(dialogView);
                     descriptionDialog.setPositiveButton("Save", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             String newDescription = input.getText().toString().trim();
-                            descriptionRef.setValue(newDescription);
-                            // Update the profile description on the page here.
+
+                            if (newDescription.length() > MAX_DESCRIPTION_LENGTH) {
+                                // Description exceeds the maximum character limit
+                                Toast.makeText(getActivity(), "Description must be less than " + MAX_DESCRIPTION_LENGTH + " characters", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+
+                            descriptionRef.setValue(newDescription)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            // Description updated successfully
+                                            // Update the profile description on the page here.
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            // Handle the error
+                                        }
+                                    });
                         }
                     });
                     descriptionDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -276,6 +283,7 @@ public class AccountFragment extends Fragment {
                     });
                     final AlertDialog descriptionAlert = descriptionDialog.create();
 
+                    input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAX_DESCRIPTION_LENGTH)});
                     input.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -283,7 +291,9 @@ public class AccountFragment extends Fragment {
 
                         @Override
                         public void onTextChanged(CharSequence s, int start, int before, int count) {
-                            descriptionAlert.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(!s.toString().trim().isEmpty());
+                            int remainingChars = MAX_DESCRIPTION_LENGTH - s.length();
+                            characterCount.setText("Remaining characters: " + remainingChars);
+                            descriptionAlert.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(!s.toString().trim().isEmpty() && s.length() <= MAX_DESCRIPTION_LENGTH);
                         }
 
                         @Override
@@ -292,40 +302,70 @@ public class AccountFragment extends Fragment {
                     });
 
                     descriptionAlert.show();
+
                 } else if (which == 3) {
                     pd.setMessage("Changing username");
-                    final EditText input = new EditText(getActivity());
-                    input.setInputType(InputType.TYPE_CLASS_TEXT);
-                    final String currentUsername = "";
-                    input.setText(currentUsername);
-                    input.setSelection(currentUsername.length());
+
+                    // Inflate the XML layout file
+                    LayoutInflater inflater = LayoutInflater.from(getActivity());
+                    View dialogView = inflater.inflate(R.layout.username_dialog, null);
+
+                    final EditText input = dialogView.findViewById(R.id.usernameEditText);
+                    final TextView characterCount = dialogView.findViewById(R.id.characterCountTextView);
+
                     final DatabaseReference usernameRef = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid()).child("username");
-                    if (!input.getText().toString().equals("")) {
-                        usernameRef.setValue(input.getText().toString())
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        DatabaseReference ref = usernameRef.getRef();
-                                        // Do something with the DatabaseReference object
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        // Handle the error
-                                    }
-                                });
-                    }
+
+                    // Define the maximum character limit for the username
+                    final int MAX_USERNAME_LENGTH = 20;
 
                     AlertDialog.Builder usernameDialog = new AlertDialog.Builder(getActivity());
-                    usernameDialog.setTitle("Edit Username");
-                    usernameDialog.setView(input);
+                    usernameDialog.setView(dialogView);
                     usernameDialog.setPositiveButton("Save", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            String newUsername = input.getText().toString().trim();
-                            usernameRef.setValue(newUsername);
-                            // Update the profile username on the page here.
+                            final String newUsername = input.getText().toString().trim();
+
+                            if (newUsername.length() > MAX_USERNAME_LENGTH) {
+                                // Username exceeds the maximum character limit
+                                Toast.makeText(getActivity(), "Username must be less than " + MAX_USERNAME_LENGTH + " characters", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+
+                            // Check if the new username already exists in the database
+                            Query checkUsernameQuery = FirebaseDatabase.getInstance().getReference().child("Users")
+                                    .orderByChild("username").equalTo(newUsername);
+                            checkUsernameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()) {
+                                        // Username already exists, handle the case
+                                        Toast.makeText(getActivity(), "Username already exists", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        // Username is unique, proceed with updating the username
+                                        usernameRef.setValue(newUsername)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        // Username updated successfully
+                                                        // Update the profile username on the page here.
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        // Handle the failure to update the username
+                                                        Toast.makeText(getActivity(), "Failed to update username", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    // Handle the database error
+                                    Toast.makeText(getActivity(), "Database error occurred", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     });
                     usernameDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -336,6 +376,7 @@ public class AccountFragment extends Fragment {
                     });
                     final AlertDialog usernameAlert = usernameDialog.create();
 
+                    input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAX_USERNAME_LENGTH)});
                     input.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -343,7 +384,12 @@ public class AccountFragment extends Fragment {
 
                         @Override
                         public void onTextChanged(CharSequence s, int start, int before, int count) {
-                            usernameAlert.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(!s.toString().trim().isEmpty());
+                            // Calculate the remaining characters
+                            int remainingChars = MAX_USERNAME_LENGTH - s.length();
+                            characterCount.setText("Remaining characters: " + remainingChars);
+
+                            // Enable or disable the positive button based on the input length
+                            usernameAlert.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(!s.toString().trim().isEmpty() && s.length() <= MAX_USERNAME_LENGTH);
                         }
 
                         @Override
@@ -353,7 +399,7 @@ public class AccountFragment extends Fragment {
 
                     usernameAlert.show();
 
-                } else if (which == 4) {
+                }else if (which == 4) {
                     pd.setMessage("Changing password");
                     final EditText input = new EditText(getActivity());
                     input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -394,6 +440,9 @@ public class AccountFragment extends Fragment {
                                                 }
                                             }
                                         });
+                            } else {
+                                pd.setTitle("Logging in");
+                                startActivity(new Intent(getActivity(), LogIn.class));
                             }
                         }
                     });
@@ -603,6 +652,5 @@ public class AccountFragment extends Fragment {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, CAMERA_REQUEST_CODE);
     }
-
 }
 

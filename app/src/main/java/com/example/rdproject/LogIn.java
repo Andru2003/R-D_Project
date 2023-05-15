@@ -43,12 +43,11 @@ import java.util.Objects;
 
 public class LogIn extends AppCompatActivity {
 
-    private FirebaseAuth auth;
+
     private Button login_button;
     private TextView redirect_to_sign_up, forgot_pswd;
     private TextInputEditText login_password, login_email;
-    FirebaseDatabase database;
-    DatabaseReference reference;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +67,6 @@ public class LogIn extends AppCompatActivity {
         text.setMessage("Please wait while it`s loading ...");
 
         auth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-        reference = database.getReference("Users");
 
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override

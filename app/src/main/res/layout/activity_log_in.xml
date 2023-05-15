@@ -58,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.542"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/forgot" />
+        app:layout_constraintTop_toBottomOf="@+id/forgot_pswd_text" />
 
     <TextView
         android:id="@+id/textview2"
