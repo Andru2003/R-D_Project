@@ -2,6 +2,7 @@ package com.example.rdproject;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -140,7 +141,8 @@ public class PopularFragment extends Fragment {
     private final RecipeClickListener recipeClickListener = new RecipeClickListener() {
         @Override
         public void onRecipeClicked(String id) {
-            Toast.makeText(getActivity(),id,Toast.LENGTH_SHORT);
+            //Toast.makeText(getActivity(),id,Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getActivity(),RecipePageActivity.class).putExtra("id",id));
         }
     };
 
