@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.rdproject.Adapter.RandomRecipeAdapter;
 import com.example.rdproject.Listeners.RandomRecipiResponseListener;
+import com.example.rdproject.Listeners.RecipeClickListener;
 import com.example.rdproject.Models.RandomRApiResponse;
 
 import java.util.ArrayList;
@@ -112,7 +113,7 @@ public class PopularFragment extends Fragment {
             recyclerView = getView().findViewById(R.id.recyclerRandom);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            randomRecipeAdapter = new RandomRecipeAdapter(getContext(), response.recipes);
+            randomRecipeAdapter = new RandomRecipeAdapter(getContext(), response.recipes, recipeClickListener);
             recyclerView.setAdapter(randomRecipeAdapter);
         }
 
@@ -134,6 +135,12 @@ public class PopularFragment extends Fragment {
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
 
+        }
+    };
+    private final RecipeClickListener recipeClickListener = new RecipeClickListener() {
+        @Override
+        public void onRecipeClicked(String id) {
+            Toast.makeText(getActivity(),id,Toast.LENGTH_SHORT);
         }
     };
 

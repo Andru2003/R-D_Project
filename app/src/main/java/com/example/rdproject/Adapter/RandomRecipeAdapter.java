@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.rdproject.Listeners.RecipeClickListener;
 import com.example.rdproject.Models.Recipe;
 import com.example.rdproject.R;
 import com.squareup.picasso.Picasso;
@@ -20,11 +21,14 @@ import java.util.List;
 public class RandomRecipeAdapter extends RecyclerView.Adapter<RandomRecipeViewHolder> {
 
     Context context;
+    // Here we create a listener regarding opening certain recipe pages
+    RecipeClickListener listener;
     List<Recipe> list;
 
-    public RandomRecipeAdapter(Context context, List<Recipe> list) {
+    public RandomRecipeAdapter(Context context, List<Recipe> list, RecipeClickListener listener) {
         this.context = context;
         this.list = list;
+        this.listener = listener;
     }
 
     @NonNull
@@ -42,6 +46,12 @@ public class RandomRecipeAdapter extends RecyclerView.Adapter<RandomRecipeViewHo
         holder.randomRecipeTime.setText(list.get(position).readyInMinutes + " Minutes");
         //sets the images for the food
         Picasso.get().load(list.get(position).image).into(holder.randomRecipeImage);
+        holder.randomContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onRecipeClicked(String.valueOf(list.get(holder.getAbsoluteAdapterPosition()).id));
+            }
+        });
     }
 
     @Override
