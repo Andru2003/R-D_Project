@@ -1,6 +1,7 @@
 package com.example.rdproject.Adapter;
 
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,8 +45,10 @@ public class RandomRecipeAdapter extends RecyclerView.Adapter<RandomRecipeViewHo
         holder.randomRecipeLike.setText(list.get(position).aggregateLikes + " Likes");
         holder.randomRecipeServings.setText(list.get(position).servings + " Servings");
         holder.randomRecipeTime.setText(list.get(position).readyInMinutes + " Minutes");
+
         //sets the images for the food
         Picasso.get().load(list.get(position).image).into(holder.randomRecipeImage);
+
         holder.randomContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

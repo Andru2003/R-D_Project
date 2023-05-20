@@ -63,6 +63,8 @@ dependencies {
     //Picasso - tool used to load images from our databases.//
     implementation 'com.squareup.picasso:picasso:2.8'
 
+    //Jsoup, library utility which performs HTML text parsing
+    implementation 'org.jsoup:jsoup:1.14.2'
 }
 
 dependencies {

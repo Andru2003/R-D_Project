@@ -32,6 +32,7 @@ public class RecipePageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_recipe_page);
         findviews();
         id = Integer.parseInt(getIntent().getStringExtra("id"));
@@ -48,8 +49,8 @@ public class RecipePageActivity extends AppCompatActivity {
         textView_meal_summary = findViewById(R.id.textView_meal_summary);
         imageView_meal_image = findViewById(R.id.imageView_meal_image);
         recycler_meal_ingredients = findViewById(R.id.recycler_meal_ingredients);
-
     }
+
     private final RecipeDetailsListener recipeDetailsListener = new RecipeDetailsListener() {
         @Override
         public void didFetch(RecipeDetailsResponse response, String message) {

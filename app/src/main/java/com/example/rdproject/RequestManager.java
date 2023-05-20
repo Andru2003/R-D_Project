@@ -7,6 +7,9 @@ import com.example.rdproject.Listeners.RecipeDetailsListener;
 import com.example.rdproject.Models.RandomRApiResponse;
 import com.example.rdproject.Models.RecipeDetailsResponse;
 
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -58,7 +61,9 @@ public class RequestManager {
             }
         });
     }
-
+    
+    //setting the summary that has to be cleaned.
+    String summary;
 
     public void getRecipeDetails(RecipeDetailsListener listener, int id){
         CallRecipeDetails callRecipeDetails = retrofit.create(CallRecipeDetails.class);
@@ -70,6 +75,17 @@ public class RequestManager {
                     listener.didError(response.message());
                     return;
                 }
+                RecipeDetailsResponse detailsResponse = response.body();
+                if(detailsResponse != null)
+                {
+                    summary = detailsResponse.summary;
+                }
+                //Using Jsoup to remove the HTML tags from the text
+                String cleanedSummary = Jsoup.clean(summary, Whitelist.none());
+
+                //Set the cleaned summary
+                detailsResponse.summary = cleanedSummary;
+
                 listener.didFetch(response.body(),response.message());
             }
 

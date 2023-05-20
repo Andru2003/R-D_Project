@@ -5,7 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardBackgroundColor="@color/white"
     app:cardElevation="8dp"
-    android:layout_margin="8dp">
+    android:layout_margin="15dp"
+    app:cardCornerRadius="20dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,15 +20,16 @@
             android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
             android:textAlignment="center"
-            android:textSize="16sp"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:padding="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <ImageView
             android:id="@+id/imageView_ingredients"
             android:scaleType="center"
-            android:layout_width="80dp"
-            android:layout_height="250dp" />
+            android:layout_width="120dp"
+            android:layout_height="100dp" />
         <TextView
             android:id="@+id/textView_ingredients_name"
             android:text ="Chicken"
