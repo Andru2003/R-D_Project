@@ -4,8 +4,10 @@ import android.content.Context;
 
 import com.example.rdproject.Listeners.RandomRecipiResponseListener;
 import com.example.rdproject.Listeners.RecipeDetailsListener;
+import com.example.rdproject.Listeners.SimilarRecipesListener;
 import com.example.rdproject.Models.RandomRApiResponse;
 import com.example.rdproject.Models.RecipeDetailsResponse;
+import com.example.rdproject.Models.SimilarRecipeResponse;
 
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
@@ -95,11 +97,32 @@ public class RequestManager {
 
             }
         });
+    }
 
+    public void getSimilarRecipies(SimilarRecipesListener listener, int id)
+    {
+        CallSimilarRecepies callSimilarRecepies = retrofit.create(CallSimilarRecepies.class);
+        Call<List<SimilarRecipeResponse>> call = callSimilarRecepies.callSimilarRecipes(id, "4", context.getString(R.string.api_key));
+        call.enqueue(new Callback<List<SimilarRecipeResponse>>() {
+            @Override
+            public void onResponse(Call<List<SimilarRecipeResponse>> call, Response<List<SimilarRecipeResponse>> response) {
+                if(!response.isSuccessful())
+                {
+                    listener.didError(response.message());
+                    return;
+                }
+                listener.didFetch(response.body(), response.message());
+            }
+
+            @Override
+            public void onFailure(Call<List<SimilarRecipeResponse>> call, Throwable t) {
+                listener.didError(t.getMessage());
+            }
+        });
     }
 
 
-    //mandatory interface used to make the calls to the API
+    //mandatory interfaces used to make the calls to the API
     private interface  CallRandomRecipes{
         @GET("recipes/random")
         Call<RandomRApiResponse> callRandomRecipe(
@@ -121,6 +144,18 @@ public class RequestManager {
                 @Query("apiKey") String apiKey
 
         );
+    }
+
+    private interface  CallSimilarRecepies{
+
+        @GET("recipes/{id}/similar")
+        Call<List<SimilarRecipeResponse>> callSimilarRecipes (
+          @Path("id") int id,
+          @Query("number") String number,
+          @Query("apiKey") String apiKey
+        );
+
+
     }
 
 }
