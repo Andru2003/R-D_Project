@@ -2,9 +2,11 @@ package com.example.rdproject;
 
 import android.content.Context;
 
+import com.example.rdproject.Listeners.InstructionsListener;
 import com.example.rdproject.Listeners.RandomRecipiResponseListener;
 import com.example.rdproject.Listeners.RecipeDetailsListener;
 import com.example.rdproject.Listeners.SimilarRecipesListener;
+import com.example.rdproject.Models.InstructionsResponse;
 import com.example.rdproject.Models.RandomRApiResponse;
 import com.example.rdproject.Models.RecipeDetailsResponse;
 import com.example.rdproject.Models.SimilarRecipeResponse;
@@ -122,6 +124,30 @@ public class RequestManager {
     }
 
 
+
+    public void getInstructions(InstructionsListener listener, int id)
+    {
+        CallInstruction callInstruction = retrofit.create(CallInstruction.class);
+        Call<List<InstructionsResponse>> call = callInstruction.callInstructions(id, context.getString(R.string.api_key));
+        call.enqueue(new Callback<List<InstructionsResponse>>() {
+            @Override
+            public void onResponse(Call<List<InstructionsResponse>> call, Response<List<InstructionsResponse>> response) {
+                if(!response.isSuccessful())
+                {
+                    listener.didError(response.message());
+                    return;
+                }
+                listener.didFetch(response.body(), response.message());
+            }
+
+            @Override
+            public void onFailure(Call<List<InstructionsResponse>> call, Throwable t) {
+                listener.didError(t.getMessage());
+            }
+        });
+    }
+
+
     //mandatory interfaces used to make the calls to the API
     private interface  CallRandomRecipes{
         @GET("recipes/random")
@@ -154,8 +180,14 @@ public class RequestManager {
           @Query("number") String number,
           @Query("apiKey") String apiKey
         );
+    }
 
-
+    private interface CallInstruction{
+        @GET("recipes/{id}/analyzedInstructions")
+        Call<List<InstructionsResponse>> callInstructions(
+          @Path("id") int id,
+          @Query("apiKey") String apiKey
+        );
     }
 
 }
