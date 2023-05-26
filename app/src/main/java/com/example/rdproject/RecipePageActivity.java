@@ -45,7 +45,7 @@ public class RecipePageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
         setContentView(R.layout.activity_recipe_page);
         findviews();
         id = Integer.parseInt(getIntent().getStringExtra("id"));

@@ -2,30 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/backgroundWhite">
 
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Edit Username"
+        android:textStyle="bold"
+        android:textColor="@color/green"
+        android:layout_margin="10dp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
         android:id="@+id/usernameEditText"
+        android:hint="Enter your username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:maxLines="1"
+        android:layout_margin="10dp"
         android:imeOptions="actionDone" />
 
     <TextView
         android:id="@+id/characterCountTextView"
+        android:layout_margin="10dp"
+
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Remaining characters: 20"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@color/green"
         android:layout_gravity="end" />
 
 </LinearLayout>

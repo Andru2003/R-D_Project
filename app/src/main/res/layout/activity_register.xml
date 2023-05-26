@@ -7,157 +7,184 @@
     tools:context=".LogIn"
     android:orientation="vertical"
     android:layout_gravity="center"
-    android:padding="15dp">
+    android:padding="15dp"
+    android:background="@drawable/backgroundbb">
 
-    <TextView
-        android:id="@+id/SignIntext"
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
-        android:gravity="center"
-        android:text="@string/action_sign_in_short"
-        android:textSize="25sp"
-        android:textStyle="bold"
-
-        app:layout_constraintBottom_toTopOf="@+id/text_input_signin_email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.466"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_signin_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="550dp"
+        android:padding="10dp"
+        app:cardBackgroundColor="@color/orange"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
-
-        tools:layout_editor_absoluteX="14dp"
-        >
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/signin_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:hint="@string/prompt_email"
-
-            tools:layout_editor_absoluteX="15dp"
-            tools:layout_editor_absoluteY="134dp"
-          />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-
-        app:layout_constraintTop_toBottomOf="@id/text_input_signin_email"
-
-        tools:layout_editor_absoluteX="14dp"
-        >
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/username"
-            android:inputType="textEmailAddress"
-
-            tools:layout_editor_absoluteX="15dp"
-            tools:layout_editor_absoluteY="134dp"
-           />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-
-        app:passwordToggleEnabled="true"
-        app:layout_constraintTop_toBottomOf="@id/text_input_username"
-
-        tools:layout_editor_absoluteX="14dp"
-        >
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/signin_pswd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/prompt_password"
-            android:inputType="textEmailAddress"
-
-            tools:layout_editor_absoluteX="15dp"
-            tools:layout_editor_absoluteY="134dp"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_confirm_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-
-        app:passwordToggleEnabled="true"
-        app:layout_constraintTop_toBottomOf="@id/text_input_password"
-
-        tools:layout_editor_absoluteX="14dp"
-        >
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/confirmPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/confirm_psw"
-            android:inputType="textEmailAddress"
-
-            tools:layout_editor_absoluteX="15dp"
-            tools:layout_editor_absoluteY="134dp"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <Button
-        android:id="@+id/signin_buttton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="@string/action_sign_in_short"
-        android:textSize="20sp"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_input_confirm_password" />
-
-    <TextView
-        android:id="@+id/checking_account_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/check_account_existance"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signin_buttton" />
-
-    <TextView
-        android:id="@+id/text_to_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/login"
-        android:textStyle="bold"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checking_account_text" />
+        app:layout_constraintTop_toTopOf="parent"
+       >
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/backgroundred"
+            android:orientation="vertical">
+
+            <TextView
+
+                android:id="@+id/SignIntext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="48dp"
+                android:gravity="center"
+                android:text="@string/action_sign_in_short"
+                android:textColor="@color/backgroundWhite"
+                android:textSize="30sp"
+                android:textStyle="bold"
+
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_signin_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                tools:layout_editor_absoluteX="14dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/signin_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/backgroundWhite"
+                    android:hint="@string/prompt_email"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/green"
+                    tools:layout_editor_absoluteX="15dp"
+                    tools:layout_editor_absoluteY="134dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:paddingBottom="5dp"
+
+                tools:layout_editor_absoluteX="14dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/backgroundWhite"
+                    android:hint="@string/username"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/green"
+
+                    tools:layout_editor_absoluteX="15dp"
+                    tools:layout_editor_absoluteY="134dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+
+                app:passwordToggleEnabled="true"
+
+                tools:layout_editor_absoluteX="14dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/signin_pswd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/backgroundWhite"
+                    android:hint="@string/prompt_password"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/green"
+
+                    tools:layout_editor_absoluteX="15dp"
+                    tools:layout_editor_absoluteY="134dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+
+                app:layout_constraintTop_toBottomOf="@id/text_input_password"
+                app:passwordToggleEnabled="true"
+
+                tools:layout_editor_absoluteX="14dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/confirmPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/backgroundWhite"
+                    android:hint="@string/confirm_psw"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/green"
+
+                    tools:layout_editor_absoluteX="15dp"
+                    tools:layout_editor_absoluteY="134dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/signin_buttton"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="20dp"
+                android:background="@drawable/mybutton"
+                android:gravity="center"
+                android:text="@string/action_sign_in_short"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+
+                />
+
+            <TextView
+                android:id="@+id/checking_account_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:text="@string/check_account_existance"
+                android:textColor="@color/backgroundWhite"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/text_to_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:text="@string/login"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

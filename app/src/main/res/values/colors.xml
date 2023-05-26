@@ -2,4 +2,14 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    //we have introduced the colors of our color palette
+    <color name="backgroundWhite">#e7eee7</color>
+    <color name="darkBlue">#150950</color>
+    <color name="orange">#ff6933</color>
+    <color name="yellow">#fad074</color>
+    <color name="red">#e74853</color>
+    <color name="green"> #6c9e4f </color>>
+
+
 </resources>

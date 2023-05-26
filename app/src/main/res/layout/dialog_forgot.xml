@@ -15,16 +15,17 @@
         android:layout_height="match_parent"
         android:layout_marginTop="20dp"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="20dp">
+        tools:layout_editor_absoluteX="20dp"
+        android:padding="20dp">
 
         <TextView
             android:id="@+id/desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
+            android:layout_margin="5dp"
             android:text="Enter your e-mail address:"
             android:paddingLeft="10dp"
-            android:textColor="@color/black"
+            android:textColor="@color/green"
             android:textSize="16dp"
             app:layout_constraintBottom_toTopOf="@+id/emailbox"
             tools:layout_editor_absoluteX="0dp" />
@@ -33,6 +34,7 @@
             android:id="@+id/emailbox"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:hint="email"
             android:backgroundTint="@color/cardview_dark_background"
             android:maxLines="1"
             android:textSize="16sp"
@@ -40,22 +42,33 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="16dp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/resend_email"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:layout_marginEnd="52dp"
             android:text="Send e-mail"
             app:layout_constraintEnd_toEndOf="parent"
+
+            android:textStyle="bold"
+            android:textColor="@color/backgroundWhite"
+            android:background="@drawable/mybutton"
+
+
             app:layout_constraintTop_toBottomOf="@+id/emailbox" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/cancel_button"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:text="Cancel"
+            android:textStyle="bold"
+            android:textColor="@color/backgroundWhite"
+            android:background="@drawable/mybutton"
+
+
             app:layout_constraintEnd_toStartOf="@+id/resend_email"
             app:layout_constraintHorizontal_bias="0.75"
             app:layout_constraintStart_toStartOf="parent"
@@ -68,8 +81,9 @@
             android:backgroundTint="@color/material_dynamic_neutral99"
             android:drawablePadding="8dp"
             android:gravity="center"
+            android:layout_margin="10dp"
             android:text="@string/forgotpsd"
-            android:textColor="@color/black"
+            android:textColor="@color/green"
             android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/desc"

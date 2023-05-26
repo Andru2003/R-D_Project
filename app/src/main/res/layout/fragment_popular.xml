@@ -11,7 +11,7 @@
    <LinearLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       android:background="#09EA3A"
+       android:background="@color/yellow"
        android:orientation="vertical">
        <androidx.appcompat.widget.Toolbar
            android:layout_width="match_parent"
@@ -30,8 +30,7 @@
                    android:padding="0dp"
 
                    android:text="Popular dishes!"
-                   android:textColor="@color/white"
-
+                   android:textColor="@color/darkBlue"
                    android:textSize="10pt"
                    android:textStyle="bold" />
            <Spinner
@@ -60,7 +59,7 @@
                android:id="@+id/searchBarView"
                app:queryHint="Search your favorite recipies by name!"
                app:iconifiedByDefault="false"
-               android:background="#ffffff"
+               android:background="@color/yellow"
                android:layout_width="match_parent"
                android:layout_height="match_parent"
 
