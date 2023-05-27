@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
-    app:cardElevation="8dp"
-    android:layout_margin="4dp"
-    app:cardCornerRadius="10dp">
+    android:orientation="vertical"
+    android:background="#00FFFFFF"
+>
 
     <LinearLayout
-        android:background="#eab676"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -17,21 +16,22 @@
         <TextView
             android:id="@+id/textviewInstruction"
             android:text="instrcutions"
-            android:textColor="@color/black"
+            android:textColor="@color/backgroundWhite"
             android:textAlignment="center"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4pt"
+
             />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerSteps"
-            android:layout_margin="10dp"
+            android:layout_margin="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
 
-    </LinearLayout>>
-</androidx.cardview.widget.CardView>
+    </LinearLayout>
+</LinearLayout>

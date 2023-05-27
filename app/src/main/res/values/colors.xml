@@ -9,7 +9,7 @@
     <color name="orange">#ff6933</color>
     <color name="yellow">#fad074</color>
     <color name="red">#e74853</color>
-    <color name="green"> #6c9e4f </color>>
-
+    <color name="green"> #6c9e4f </color>
+    <color name="textred"> #800020 </color>
 
 </resources>

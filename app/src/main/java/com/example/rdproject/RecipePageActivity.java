@@ -1,6 +1,7 @@
 package com.example.rdproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.databinding.adapters.ProgressBarBindingAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,6 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,7 +46,6 @@ public class RecipePageActivity extends AppCompatActivity {
     SimilarRecipeAdapter similarRecipeAdapter;
     InstructionsAdapter instructionsAdapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +60,23 @@ public class RecipePageActivity extends AppCompatActivity {
         dialog = new ProgressDialog(this);
         dialog.setTitle("Loading Details...");
         dialog.show();
+
+
+        CardView cardView = findViewById(R.id.expandableCardView);
+        ImageButton expandButton = findViewById(R.id.expandButton);
+
+        expandButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (recyclerMealInstructions.getVisibility() == View.VISIBLE) {
+                    recyclerMealInstructions.setVisibility(View.GONE);
+                    expandButton.setImageResource(R.drawable.ic_expandless);
+                } else {
+                    recyclerMealInstructions.setVisibility(View.VISIBLE);
+                    expandButton.setImageResource(R.drawable.ic_expandmore);
+                }
+            }
+        });
     }
 
     private void findviews() {
@@ -127,7 +148,6 @@ public class RecipePageActivity extends AppCompatActivity {
 
         }
     };
-
 
 
 }

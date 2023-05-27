@@ -5,43 +5,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AccountFragment"
-    android:background="#00FFAD">
+    android:background="@color/backgroundWhite">
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/backgroundWhite">
 
             <ImageView
+                android:backgroundTint="@color/backgroundWhite"
                 android:id="@+id/cover_photo"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:background="@color/black" />
+                android:background="@color/black"
+                android:scaleType="fitXY"
+                android:src="@drawable/banner4" />
 
             <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:gravity="center"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="170dp"
                 android:background="@drawable/circular_background"
                 android:backgroundTint="@color/white"
-                android:layout_marginStart="300dp">
+                android:gravity="center">
 
                 <ImageView
                     android:id="@+id/user_profile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_add_image"
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/circular_background"
-
                     android:scaleType="centerCrop"
-                    />
+
+                    android:src="@drawable/ic_add_image" />
 
             </LinearLayout>
 
@@ -55,11 +60,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
-        android:layout_marginTop="20dp"
+        android:layout_margin="20dp"
         android:gravity="center"
+        android:textStyle="bold"
         android:hint="username"
-        android:textColor="@color/black"
-        android:textSize="40dp"
+        android:textColor="@color/textred"
+        android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,26 +76,45 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginTop="12dp"
+        android:layout_margin="15dp"
         android:hint="email"
-        android:textSize="30dp"
+        android:textSize="20dp"
+        android:textColor="@color/textred"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username" />
 
-    <TextView
-        android:id="@+id/description"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/black"
-        android:gravity="center"
-        android:hint="Muie"
-        android:textSize="30dp"
+        android:layout_margin="20dp"
 
+
+        app:cardCornerRadius="30dp"
+        app:cardBackgroundColor="@color/textred"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email"
-        app:layout_constraintVertical_bias="0.178"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2">
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
+            android:textColor="@color/backgroundWhite"
+            android:gravity="center"
+            android:layout_margin="20dp"
+            android:hint="Description"
+            android:textSize="20dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/email"
+            app:layout_constraintVertical_bias="0.178"
+            tools:layout_editor_absoluteX="16dp" />
+
+    </androidx.cardview.widget.CardView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/nice_button"

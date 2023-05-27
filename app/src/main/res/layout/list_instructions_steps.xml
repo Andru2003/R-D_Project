@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardBackgroundColor="@color/backgroundWhite"
     app:cardElevation="8dp"
     android:layout_margin="8dp"
     app:cardCornerRadius="20dp"
@@ -13,7 +12,8 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/textred">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -26,7 +26,7 @@
             android:text="1"
             android:textStyle="bold"
             android:textAlignment="center"
-            android:textColor="@color/darkBlue"
+            android:textColor="@color/backgroundWhite"
             android:textSize="18sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
             android:textStyle="bold"
             android:textAlignment="center"
             android:textSize="18sp"
-            android:textColor="@color/darkBlue"
+            android:textColor="@color/backgroundWhite"
 
             />
 
@@ -49,7 +49,7 @@
             android:text="StepName"
             android:textStyle="bold"
             android:textAlignment="textStart"
-            android:textColor="@color/darkBlue"
+            android:textColor="@color/backgroundWhite"
             android:textSize="18sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:text="Equipments"
-                android:textColor="@color/darkBlue"
+                android:textColor="@color/backgroundWhite"
                 android:textAlignment="textStart"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:text="Ingredients for this step"
-                android:textColor="@color/darkBlue"
+                android:textColor="@color/backgroundWhite"
                 android:textAlignment="textStart"
                 android:textSize="18sp"
                 android:textStyle="bold"
