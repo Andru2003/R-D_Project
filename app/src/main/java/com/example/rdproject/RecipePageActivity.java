@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.view.View;
@@ -70,10 +71,10 @@ public class RecipePageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (recyclerMealInstructions.getVisibility() == View.VISIBLE) {
                     recyclerMealInstructions.setVisibility(View.GONE);
-                    expandButton.setImageResource(R.drawable.ic_expandless);
+                    expandButton.setImageResource(R.drawable.baseline_expand_more_24);
                 } else {
                     recyclerMealInstructions.setVisibility(View.VISIBLE);
-                    expandButton.setImageResource(R.drawable.ic_expandmore);
+                    expandButton.setImageResource(R.drawable.ic_expandless);
                 }
             }
         });
@@ -149,5 +150,16 @@ public class RecipePageActivity extends AppCompatActivity {
         }
     };
 
+    public void expandSummary(View view) {
+        TextView textView = (TextView) view;
+        int maxLines = textView.getMaxLines();
+        if (maxLines == 3) {
+            textView.setMaxLines(Integer.MAX_VALUE);
+            textView.setEllipsize(null);
+        } else {
+            textView.setMaxLines(3);
+            textView.setEllipsize(TextUtils.TruncateAt.END);
+        }
+    }
 
 }

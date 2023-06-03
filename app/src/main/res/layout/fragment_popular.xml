@@ -70,7 +70,7 @@
            android:layout_width="match_parent"
            android:layout_height="match_parent"
            android:orientation="vertical"
-           android:background="@drawable/backgroundblackgradient"
+           android:background="@drawable/gradientblack1"
            android:layout_marginTop="10dp"
 
            >

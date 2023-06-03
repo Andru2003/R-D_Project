@@ -216,25 +216,25 @@ public class AccountFragment extends Fragment {
                 if (which == 0) {
                     pd.setMessage("Updating profile photo");
                     pickFromStorage();
-//                    if(!checkStoragePermission())
-//                    {
-//                        requestStoragePermission();
-//                        pickFromStorage();
-//                    }
-//                    else {
-//                        pickFromStorage();
-//                    }
+                    if(!checkStoragePermission())
+                    {
+                        requestStoragePermission();
+                        pickFromStorage();
+                    }
+                    else {
+                        pickFromStorage();
+                    }
                 } else if (which == 1) {
                     pd.setMessage("Updating profile photo");
-//                    if(!checkCameraPermission())
-//                    {
-//                        requestCameraPermission();
-//                        //pickFromCamera();
-//                    }
-                    //else {
+                    if(!checkCameraPermission())
+                    {
+                        requestCameraPermission();
+                        pickFromCamera();
+                    }
+                    else {
                         Toast.makeText(getActivity(), "Testttt", Toast.LENGTH_SHORT).show();
                         pickFromCamera();
-                    //}
+                    }
                 } else if (which == 2) {
                     LayoutInflater inflater = LayoutInflater.from(getActivity());
                     View dialogView = inflater.inflate(R.layout.description_dialog, null);

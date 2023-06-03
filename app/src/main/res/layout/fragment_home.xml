@@ -1,61 +1,255 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment"
-    android:background="#FF2D00">
+    android:background="@drawable/backgroundoodleshadow"
+    android:orientation="vertical"
+    android:windowSoftInputMode="adjustResize"
+    android:fillViewport="true">
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
     <!-- TODO: Update blank fragment layout -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_height="match_parent"
+
+
+<ImageView
+    android:layout_width="150dp"
+    android:layout_height="150dp"
+    android:layout_gravity="center"
+    android:layout_margin="10dp"
+    android:src="@drawable/final_logo"
+    />
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/cardContainer"
         android:layout_width="match_parent"
-        >
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="16dp">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/cardTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Home"
-            android:textColor="@color/white"
-            android:textSize="50sp"
+            android:text="ABOUT US"
+            android:textSize="25sp"
+            android:textColorHighlight="@color/white"
+            android:textColor="@color/textred"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="20dp"
+            android:shadowColor="@color/white"
+            android:shadowDx="5"
+            android:shadowDy="1"
+            android:shadowRadius="1" />
 
-        <Button
-            android:id="@+id/buttonlogin"
-            android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/expandCollapseIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/baseline_expand_more_24"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        />
+
+        <LinearLayout
+            android:id="@+id/cardContent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:backgroundTint="@color/white"
-            android:gravity="center"
-            android:paddingLeft="30dp"
-            android:paddingTop="20dp"
-            android:paddingRight="30dp"
-            android:paddingBottom="20dp"
-            android:text="Go to Login"
-            android:textAlignment="center"
-            android:textColor="#CF1313"
-            android:textSize="10pt"
-            android:textStyle="bold"
-            app:cornerRadius="100dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
-            app:layout_constraintVertical_bias="0.2"
-            app:strokeColor="#CF1313"
-            app:strokeWidth="5dp"
-            tools:text="Go to Login">
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_below="@id/cardTitle">
 
-        </Button>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/welcomeCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="30dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/welcomeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WELCOME TO DISHCOVERY!"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="@color/green"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/culinaryInspirationText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Discover endless culinary inspiration! Whether you're an aspiring chef or a busy student, you will find a great range of recipes to suit any taste or dietary preference. From appetizers to desserts, unleash your creativity and explore a world of culinary possibilities."
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/green"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/goodbyeIngredientsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Say goodbye to wasted ingredients and hello to culinary excellence!"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/green"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/howToUseContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/gradientred">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/howToUseTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                   android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="HOW TO USE?"
+                    android:layout_gravity="center"
+                    android:textSize="25sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+
+                    />
+
+                <ScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/howToUseText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="All you have to do is entering the all the ingredients you want to use in your meals in the search bar separating them with one come each (no space must be entered), for example you may search something just like this:carrot,poatato,chicken,          noodles
+                                     ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ
+                     Now try it yourself and say hello to culinary creativity with Dishcovery!"
+                        android:textColor="@color/white"
+                        android:visibility="gone"
+                        android:textSize="18sp" />
+
+                </ScrollView>
+
+            </LinearLayout>
 
 
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </LinearLayout>
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SEARCH BY INGREDIENTS:"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:textColorHighlight="@color/white"
+        android:textColor="@color/textred"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:shadowColor="@color/white"
+        android:shadowDx="5"
+        android:shadowDy="1"
+        android:shadowRadius="1" />
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="10dp"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/white">
+
+    <EditText
+        android:gravity="left"
+        android:id="@+id/editTextSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:textColor="@color/textred"
+        android:textSize="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_gravity="center"
+        android:hint="Insert your ingredintes" />
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/buttonSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search your recipes!"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:padding="20sp"
+        android:textSize="18dp"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/red"
+        android:layout_margin="10dp"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recipe_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="5dp"
+         />
+</LinearLayout>
+</ScrollView>

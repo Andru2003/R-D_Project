@@ -5,7 +5,9 @@ import android.content.Context;
 import com.example.rdproject.Listeners.InstructionsListener;
 import com.example.rdproject.Listeners.RandomRecipiResponseListener;
 import com.example.rdproject.Listeners.RecipeDetailsListener;
+import com.example.rdproject.Listeners.SearchByIngredientsListener;
 import com.example.rdproject.Listeners.SimilarRecipesListener;
+import com.example.rdproject.Models.IngredientSearchResponse;
 import com.example.rdproject.Models.InstructionsResponse;
 import com.example.rdproject.Models.RandomRApiResponse;
 import com.example.rdproject.Models.RecipeDetailsResponse;
@@ -148,6 +150,32 @@ public class RequestManager {
     }
 
 
+    ///Demo search by ingredients response doamne ajuta
+    public void SearchByIngredientsResponse(String ingredients, SearchByIngredientsListener l)
+    {
+        CallSearchByIngredients callSearchByIngredients = retrofit.create(CallSearchByIngredients.class);
+        Call<List<IngredientSearchResponse>> call = callSearchByIngredients.callInstructions(ingredients, "10",  context.getString(R.string.api_key));
+
+        call.enqueue(new Callback<List<IngredientSearchResponse>>() {
+            @Override
+            public void onResponse(Call<List<IngredientSearchResponse>> call, Response<List<IngredientSearchResponse>> response) {
+                if(!response.isSuccessful())
+                {
+                    l.didError(response.message());
+                    return;
+                }
+                l.didFetch(response.body(), response.message());
+
+            }
+
+            @Override
+            public void onFailure(Call<List<IngredientSearchResponse>> call, Throwable t) {
+                l.didError(t.getMessage());
+            }
+        });
+    }
+
+
     //mandatory interfaces used to make the calls to the API
     private interface  CallRandomRecipes{
         @GET("recipes/random")
@@ -187,6 +215,18 @@ public class RequestManager {
         Call<List<InstructionsResponse>> callInstructions(
           @Path("id") int id,
           @Query("apiKey") String apiKey
+        );
+    }
+
+
+    ///search by ingredients
+    private interface CallSearchByIngredients{
+        @GET("recipes/findByIngredients")
+        Call<List<IngredientSearchResponse>> callInstructions(
+                @Query("ingredients") String ingredients,
+                @Query("number") String number,
+                @Query("apiKey") String apiKey
+
         );
     }
 

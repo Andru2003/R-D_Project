@@ -13,7 +13,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/textred">
+        android:background="@drawable/gradientred">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -69,10 +69,12 @@
                 android:layout_width="match_parent"
                 android:text="Equipments"
                 android:textColor="@color/backgroundWhite"
-                android:textAlignment="textStart"
+                android:textAlignment="center"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:padding="8dp"
+                android:layout_margin="10dp"
+
                 />
 
         </LinearLayout>
@@ -82,7 +84,7 @@
             android:id="@+id/recyclerInstrctionsEquipments"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_margin="10dp"
             />
 
         <LinearLayout
@@ -96,10 +98,11 @@
                 android:layout_width="match_parent"
                 android:text="Ingredients for this step"
                 android:textColor="@color/backgroundWhite"
-                android:textAlignment="textStart"
+                android:textAlignment="center"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:padding="8dp"
+                android:layout_margin="10dp"
                 />
 
         </LinearLayout>
@@ -109,7 +112,7 @@
             android:id="@+id/recyclerInstrctionsIngredients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_margin="10dp"
             />
 
 

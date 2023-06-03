@@ -65,10 +65,7 @@ dependencies {
 
     //Jsoup, library utility which performs HTML text parsing
     implementation 'org.jsoup:jsoup:1.14.2'
-
 }
-
-
 
 dependencies {
 

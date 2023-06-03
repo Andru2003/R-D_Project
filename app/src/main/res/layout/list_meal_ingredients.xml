@@ -14,7 +14,7 @@
         <TextView
             android:id = "@+id/textView_ingredients_quantity"
             android:text = "1 pc"
-            android:textColor="@color/black"
+            android:textColor="@color/textred"
             android:singleLine="true"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
@@ -39,7 +39,7 @@
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
-            android:textColor="@color/black"
+            android:textColor="@color/textred"
             android:textStyle = "bold"
             android:padding="4dp"
             android:layout_width="match_parent"
