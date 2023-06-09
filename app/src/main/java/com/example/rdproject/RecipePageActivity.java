@@ -134,7 +134,7 @@ public class RecipePageActivity extends AppCompatActivity {
         }
     };
 
-
+    //is the listener of instruction
     private final InstructionsListener instructionsListener = new InstructionsListener() {
         @Override
         public void didFetch(List<InstructionsResponse> response, String message) {
@@ -150,6 +150,7 @@ public class RecipePageActivity extends AppCompatActivity {
         }
     };
 
+    //used to expand the summary of the recipe by clicking on it
     public void expandSummary(View view) {
         TextView textView = (TextView) view;
         int maxLines = textView.getMaxLines();

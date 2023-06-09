@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/gradientwhite"
+        android:background="@color/white"
         >
         <TextView
             android:id="@+id/randomRecipeTitle"
@@ -29,6 +29,9 @@
             android:textColor="@color/textred"
             android:textSize="22sp"
             android:padding="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
             android:textAlignment="center"
             />
 
@@ -106,7 +109,7 @@
                 >
 
                 <ImageView
-                    android:src="@drawable/icon_time"
+                    android:src="@drawable/ic_preptime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />

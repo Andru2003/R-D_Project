@@ -51,17 +51,21 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        // How To Use CardView and Text
         CardView howToUseContainer = view.findViewById(R.id.howToUseContainer);
         TextView howToUseText = view.findViewById(R.id.howToUseText);
 
+        // Set click listener for How To Use CardView
         howToUseContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isExpanded = !isExpanded;
                 if (isExpanded) {
+                    // Expand the card and show the text
                     howToUseText.setVisibility(View.VISIBLE);
                     howToUseContainer.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
                 } else {
+                    // Collapse the card and hide the text
                     howToUseText.setVisibility(View.GONE);
                     howToUseContainer.getLayoutParams().height = getResources().getDimensionPixelSize(R.dimen.cardview_default_height);
                 }
@@ -70,12 +74,13 @@ public class HomeFragment extends Fragment {
         });
 
 
-
+        // Welcome CardView and Text - just fro showing some informations to the users
         welcomeCard = view.findViewById(R.id.welcomeCard);
         welcomeText = view.findViewById(R.id.welcomeText);
         culinaryInspirationText = view.findViewById(R.id.culinaryInspirationText);
         goodbyeIngredientsText = view.findViewById(R.id.goodbyeIngredientsText);
 
+        // Set click listener for Welcome CardView - the cards extends when the user clicks on it
         welcomeCard.setOnClickListener(new View.OnClickListener() {
             boolean isExpanded = false;
 
@@ -113,15 +118,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
-//        Button button = (Button) view.findViewById(R.id.buttonlogin);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(getContext(), LogIn.class));
-//            }
-//        });
-
         searchEditText = view.findViewById(R.id.editTextSearch);
         searchButton = view.findViewById(R.id.buttonSearch);
         recyclerView = view.findViewById(R.id.recipe_recycler_view);
@@ -139,23 +135,28 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    //performs the recipe search by inputing the ingredients
     private void performRecipeSearch(String ingredients) {
         requestManager.SearchByIngredientsResponse(ingredients, new SearchByIngredientsListener() {
+            //if the request fetches then:
             @Override
             public void didFetch(List<IngredientSearchResponse> response, String message) {
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                //the adapter is set with the necessary informations about the recipe
                 recipeAdapter = new RecipeAdapter(response, getContext(), recipeClickListener);
                 recyclerView.setAdapter(recipeAdapter);
             }
 
             @Override
             public void didError(String message) {
-                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                //a taost message is showed if you get an error
+                Toast.makeText(getContext(), "You have finished your calls for today, return tommorow", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    //the recipe listener allows the user to click on the recipe container to go to the detail page of the recipe
     private final RecipeClickListener recipeClickListener = new RecipeClickListener() {
         @Override
         public void onRecipeClicked(String id) {

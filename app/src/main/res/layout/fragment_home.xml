@@ -26,30 +26,31 @@
     />
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/cardContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:background="@drawable/gradient_transparent"
+        >
 
         <TextView
             android:id="@+id/cardTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ABOUT US"
-            android:textSize="25sp"
-            android:textColorHighlight="@color/white"
-            android:textColor="@color/textred"
-            android:textStyle="bold"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="234dp"
             android:shadowColor="@color/white"
             android:shadowDx="5"
             android:shadowDy="1"
-            android:shadowRadius="1" />
+            android:shadowRadius="1"
+            android:text="ABOUT US"
+            android:textColor="@color/textred"
+            android:textColorHighlight="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/expandCollapseIcon"
@@ -171,7 +172,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginBottom="10dp"
-                        android:text="All you have to do is entering the all the ingredients you want to use in your meals in the search bar separating them with one come each (no space must be entered), for example you may search something just like this:carrot,poatato,chicken,          noodles
+                        android:text="All you have to do is entering the all the ingredients you want to use for your meals in the search bar separating them with one comma each (no space must be entered), for example you may search something just like this:carrot,potato,chicken,          noodles
                                      ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ
                      Now try it yourself and say hello to culinary creativity with Dishcovery!"
                         android:textColor="@color/white"
